@@ -1,0 +1,32 @@
+.product-page {
+	padding: 20px;
+	border-radius: 10px;
+	background-color: #ffffff;
+
+	&__title {
+		font-size: 24px;
+		font-weight: 600;
+		margin-bottom: 20px;
+	}
+
+	&__description {
+		color: gray;
+	}
+}
+
+.product-page-info {
+    gap: 15px;
+	display: flex;
+    margin: 10px 0px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    &__label {
+        flex-shrink: 0;
+        font-weight: 600;
+        min-width: 150px;
+        display: inline-block;
+    }
+}

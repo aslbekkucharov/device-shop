@@ -1,4 +1,5 @@
 import { AxiosResponse } from 'axios'
+import { Link } from 'react-router-dom'
 import { SearchOutlined } from '@ant-design/icons'
 import { useEffect, useMemo, useState } from 'react'
 import { Card, Empty, Input, Pagination, Select, Space } from 'antd'
@@ -18,7 +19,15 @@ interface Filter {
 
 function ProductsContent(props: { products: Product[] }) {
     if (props.products.length) {
-        return <div className="products-list"> {props.products.map(product => <ProductCard data={product} key={product.id} />)}</div>
+        return (
+            <div className="products-list">
+                {props.products.map(product => (
+                    <Link to={`/product/${product.id}`} key={product.id}>
+                        <ProductCard data={product} />
+                    </Link>
+                ))}
+            </div>
+        )
     }
 
     return (
