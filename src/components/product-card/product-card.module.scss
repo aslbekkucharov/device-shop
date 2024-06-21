@@ -1,6 +1,7 @@
 .product-card {
 	display: block;
 	padding: 20px;
+	height: 100%;
 	border-radius: 8px;
 	background-color: #ffffff;
 	transition: box-shadow 0.3s linear;
@@ -9,11 +10,22 @@
 		box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 	}
 
+	&__head {
+		width: 100%;
+		display: flex;
+		margin-bottom: 15px;
+		align-items: center;
+		justify-content: space-between;
+	}
+
 	&__title {
 		font-weight: 600;
 		color: #000000;
-		margin-bottom: 15px;
-		display: inline-block;
+	}
+
+	&__price {
+		font-weight: 700;
+		color: #000000;
 	}
 
 	&__excerpt {
