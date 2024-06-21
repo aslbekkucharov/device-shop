@@ -3,6 +3,11 @@
 	padding: 20px;
 	border-radius: 8px;
 	background-color: #ffffff;
+	transition: box-shadow 0.3s linear;
+
+	&:hover {
+		box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+	}
 
 	&__title {
 		font-weight: 600;
