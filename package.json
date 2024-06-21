@@ -1,0 +1,39 @@
+{
+	"name": "device-shop",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"preview": "vite preview",
+		"build": "tsc && vite build",
+		"dev": "vite",
+		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+	},
+	"dependencies": {
+		"@ant-design/icons": "^5.3.7",
+		"antd": "^5.18.3",
+		"axios": "^1.7.2",
+		"final-form": "^4.20.10",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-final-form": "^6.5.9",
+		"react-router-dom": "^6.23.1",
+		"sass": "^1.77.6",
+		"yup": "^1.4.0"
+	},
+	"devDependencies": {
+		"@types/node": "^20.14.7",
+		"@types/react": "^18.2.66",
+		"@types/react-dom": "^18.2.22",
+		"@typescript-eslint/eslint-plugin": "^7.2.0",
+		"@typescript-eslint/parser": "^7.2.0",
+		"@vitejs/plugin-react": "^4.2.1",
+		"clsx": "^2.1.1",
+		"eslint": "^8.57.0",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-react-refresh": "^0.4.6",
+		"typescript": "^5.2.2",
+		"url": "^0.11.3",
+		"vite": "^5.2.0"
+	}
+}

@@ -1,0 +1,21 @@
+.product-card {
+	display: block;
+	padding: 20px;
+	border-radius: 8px;
+	background-color: #ffffff;
+
+	&__title {
+		font-weight: 600;
+		margin-bottom: 15px;
+		display: inline-block;
+	}
+
+	&__excerpt {
+		color: gray;
+		font-size: 15px;
+		overflow: hidden;
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+	}
+}
