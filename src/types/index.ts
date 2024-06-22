@@ -13,3 +13,8 @@ export interface Pagination {
     perPage?: number
     current?: number
 }
+
+export interface LoginPayload {
+    username: string
+    password: string
+}

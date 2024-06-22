@@ -7,6 +7,12 @@ export const themeConfiguration: ThemeConfig = {
     },
 
     components: {
+
+        Input: {
+            activeBorderColor: 'rgba(0, 0, 0, 0.9)',
+            activeShadow: '0 0 0 2px rgba(0, 0, 0, 0.5)'
+        },
+
         Select: {
             optionSelectedBg: '#e2e8f0'
         }
