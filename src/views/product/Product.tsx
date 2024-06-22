@@ -1,12 +1,12 @@
+import { Card, Empty } from "antd"
 import { AxiosResponse } from "axios"
-import { useEffect, useMemo, useState } from "react"
 import { useParams } from "react-router-dom"
+import { useEffect, useMemo, useState } from "react"
 
 import { api } from "@/api"
+import { formatDate, formatPrice } from "@/utils"
 import classes from '@/views/product/product.module.scss'
 import type { Product as ProductType } from "@/types/product"
-import { formatDate, formatPrice } from "@/utils"
-import { Card, Empty } from "antd"
 
 export default function Product() {
 

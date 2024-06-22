@@ -24,8 +24,12 @@
 	}
 
 	&__price {
-		font-weight: 700;
-		color: #000000;
+		font-size: 12px;
+		font-weight: 600;
+		color: #ffffff;
+		background-color: #000000;
+		border-radius: 20px;
+		padding: 5px 10px;
 	}
 
 	&__excerpt {
