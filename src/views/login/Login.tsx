@@ -5,6 +5,7 @@ import { ValidationError } from 'yup'
 import { CheckCircleOutlined } from '@ant-design/icons'
 import { Form, FormRenderProps } from 'react-final-form'
 
+import { useAuth } from '@/hooks/useAuth'
 import type { LoginPayload } from '@/types'
 import { loginSchema } from '@/validations'
 import { authorizedUser } from '@/config/user'
@@ -13,11 +14,13 @@ import LoginForm from '@/components/form/login/LoginForm'
 
 export default function Login() {
 
+    const { login } = useAuth()
     const [initialValues, setInitialValues] = useState<LoginPayload>()
 
     function handleLoginFormSubmit(payload: LoginPayload) {
         if (authorizedUser.username === payload.username && authorizedUser.password === payload.password) {
-            localStorage.setItem('token', 'logged')
+            login()
+            localStorage.setItem('isLogged', 'true') // for some reason "token" name is crashing json-server
         }
     }
 
