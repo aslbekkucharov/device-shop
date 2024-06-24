@@ -20,7 +20,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
     function login() {
         setIsAuthenticated(true)
-        navigate("/dashboard")
+        navigate("/")
     }
 
     function logout() {

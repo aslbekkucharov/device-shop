@@ -2,6 +2,7 @@ import { Button } from 'antd'
 import { useState } from 'react'
 import { setIn } from 'final-form'
 import { ValidationError } from 'yup'
+import { Navigate } from 'react-router-dom'
 import { CheckCircleOutlined } from '@ant-design/icons'
 import { Form, FormRenderProps } from 'react-final-form'
 
@@ -14,7 +15,7 @@ import LoginForm from '@/components/form/login/LoginForm'
 
 export default function Login() {
 
-    const { login } = useAuth()
+    const { login, isAuthenticated } = useAuth()
     const [initialValues, setInitialValues] = useState<LoginPayload>()
 
     function handleLoginFormSubmit(payload: LoginPayload) {
@@ -41,6 +42,10 @@ export default function Login() {
 
     function handleAutoFill() {
         setInitialValues(() => ({ username: authorizedUser.username, password: authorizedUser.password }))
+    }
+
+    if (isAuthenticated) {
+        return <Navigate to="/" replace={true} />
     }
 
     return (
