@@ -7,21 +7,21 @@ import { Card, Empty, Input, Pagination, Select, Space } from 'antd'
 import { api } from '@/api'
 import { debounce } from '@/utils'
 import { Product } from '@/types/product'
-import { Category } from '@/types/category'
+import { useGlobal } from '@/hooks/useGlobal'
 import classes from '@/views/products/products.module.scss'
 import ProductCard from '@/components/product-card/ProductCard'
 import { PageableResponse, Pagination as PaginationType } from '@/types'
 
 interface Filter {
-    searchKey: string
     category: string
+    searchKey: string
 }
 
 function ProductsContent(props: { products: Product[] }) {
     if (props.products.length) {
         return (
             <div className="products-list">
-                {props.products.map(product => (
+                {props.products.filter(p => p.status === 'published').map((product) => (
                     <Link to={`/product/${product.id}`} key={product.id}>
                         <ProductCard data={product} />
                     </Link>
@@ -39,8 +39,8 @@ function ProductsContent(props: { products: Product[] }) {
 
 export default function Products() {
 
+    const { categories } = useGlobal()
     const [products, setProducts] = useState<Product[]>([])
-    const [categories, setCategories] = useState<Category[]>([])
     const [filter, setFilter] = useState<Filter>({ searchKey: '', category: '' })
     const [pagination, setPagination] = useState<PaginationType>({ perPage: 6, total: 0, current: 1 })
 
@@ -82,12 +82,6 @@ export default function Products() {
             setPagination((prevVal) => ({ ...prevVal, total: res.data.items }))
         })
     }, [params])
-
-    useEffect(() => {
-        api.get('/categories').then((res: AxiosResponse<Category[]>) => {
-            setCategories(res.data)
-        })
-    }, [])
 
     return (
         <div className={classes.products}>

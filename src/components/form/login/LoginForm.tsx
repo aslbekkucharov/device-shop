@@ -31,7 +31,6 @@ export default function LoginForm({ handleSubmit, submitting }: FormRenderProps<
                     />
                 )}
             </Field>
-
             <Button block htmlType="submit" size="large" type="primary" disabled={submitting}>Войти</Button>
         </form>
     )

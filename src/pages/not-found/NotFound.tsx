@@ -1,7 +1,6 @@
+import { Link } from 'react-router-dom'
 import notFoundIllustration from '@/assets/images/3.svg'
 import classes from '@/pages/not-found/not-found.module.scss'
-import { Button } from 'antd'
-import { Link } from 'react-router-dom'
 
 export default function NotFound() {
     return (

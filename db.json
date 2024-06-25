@@ -1,125 +1,61 @@
 {
-	"products": [
-		{
-			"id": "1abc",
-			"price": 800,
-			"name": "iPhone 13 Pro",
-			"category": "phones",
-			"releaseDate": "2024-05-07T19:00:00.000Z",
-			"description": "Experience the pinnacle of smartphone technology with the iPhone 13 Pro. Boasting a stunning Super Retina XDR display, a powerful A15 Bionic chip, and an advanced triple-camera system, this device redefines what's possible with a phone.",
-			"createdAt": "2024-05-07T19:00:46.718Z",
-			"status": "published"
-		},
-		{
-			"id": "2def",
-			"price": 1200,
-			"name": "MacBook Pro",
-			"category": "laptops",
-			"releaseDate": "2024-05-07T19:00:00.000Z",
-			"description": "Unleash your creativity and productivity with the MacBook Pro. Featuring the blazing-fast M1 Pro chip, a stunning Liquid Retina XDR display, and all-day battery life, it's the ultimate tool for professionals and enthusiasts alike.",
-			"createdAt": "2024-05-07T19:00:46.718Z",
-			"status": "published"
-		},
-		{
-			"price": 300,
-			"name": "Oculus Quest 2",
-			"category": "vr",
-			"releaseDate": "2024-05-07T19:00:00.000Z",
-			"description": "Dive into immersive virtual worlds with the Oculus Quest 2 VR headset. With crystal-clear optics, next-generation Touch controllers, and wireless freedom, it delivers unparalleled VR experiences for gaming, entertainment, and beyond.",
-			"createdAt": "2024-05-07T19:00:46.718Z",
-			"status": "published",
-			"id": "3ghi"
-		},
-		{
-			"id": "4jkl",
-			"price": 1500,
-			"name": "Samsung Galaxy S22",
-			"category": "phones",
-			"releaseDate": "2024-05-07T19:00:00.000Z",
-			"description": "Elevate your mobile experience with the Samsung Galaxy S22 Ultra. Featuring a stunning Infinity-O Dynamic AMOLED display, a versatile quad-camera system, and lightning-fast 5G connectivity, it's designed for those who demand the best.",
-			"createdAt": "2024-05-07T19:00:46.718Z",
-			"status": "published"
-		},
-		{
-			"id": "5mno",
-			"price": 2500,
-			"name": "Dell XPS 15",
-			"category": "laptops",
-			"releaseDate": "2024-05-07T19:00:00.000Z",
-			"description": "Experience unparalleled performance with the Dell XPS 15 laptop. Featuring a stunning 4K OLED display, powerful Intel Core i9 processor, and NVIDIA GeForce RTX graphics, it's the perfect blend of style and substance for demanding tasks.",
-			"createdAt": "2024-05-07T19:00:46.718Z",
-			"status": "published"
-		},
-		{
-			"id": "6pqr",
-			"price": 400,
-			"name": "Sony PlayStation 5",
-			"category": "consoles",
-			"releaseDate": "2024-05-07T19:00:00.000Z",
-			"description": "Immerse yourself in the next generation of gaming with the Sony PlayStation 5. Featuring lightning-fast SSD storage, haptic feedback controllers, and breathtaking 4K visuals, it delivers unparalleled gaming experiences that push the boundaries of reality.",
-			"createdAt": "2024-05-07T19:00:46.718Z",
-			"status": "published"
-		},
-		{
-			"id": "7stu",
-			"price": 150,
-			"name": "Amazon Echo Dot (4th Gen)",
-			"category": "smarthome",
-			"releaseDate": "2024-05-07T19:00:00.000Z",
-			"description": "Transform your home into a smart haven with the Amazon Echo Dot (4th Gen). With its compact design and powerful voice assistant, Alexa, you can control smart devices, play music, set alarms, and much more, all with just your voice.",
-			"createdAt": "2024-05-07T19:00:46.718Z",
-			"status": "published"
-		},
-		{
-			"id": "8vwx",
-			"price": 900,
-			"name": "Canon EOS R5",
-			"category": "cameras",
-			"releaseDate": "2024-05-07T19:00:00.000Z",
-			"description": "Capture breathtaking moments with the Canon EOS R5 mirrorless camera. Featuring a high-resolution sensor, advanced autofocus system, and 8K video recording capabilities, it's the perfect tool for professional photographers and videographers.",
-			"createdAt": "2024-05-07T19:00:46.718Z",
-			"status": "published"
-		},
-		{
-			"id": "9yza",
-			"price": 80,
-			"name": "Logitech MX Master 3",
-			"category": "accessories",
-			"releaseDate": "2024-05-07T19:00:00.000Z",
-			"description": "Enhance your productivity with the Logitech MX Master 3 wireless mouse. With its ergonomic design, customizable buttons, and precision tracking, it's the perfect companion for demanding workloads and creative tasks.",
-			"createdAt": "2024-05-07T19:00:46.718Z",
-			"status": "published"
-		}
-	],
-
-	"categories": [
-		{
-			"label": "Phones",
-			"value": "phones"
-		},
-		{
-			"label": "Laptops",
-			"value": "laptops"
-		},
-		{
-			"label": "Vr",
-			"value": "vr"
-		},
-		{
-			"label": "Сonsoles",
-			"value": "consoles"
-		},
-		{
-			"label": "Сameras",
-			"value": "cameras"
-		},
-		{
-			"label": "Smarthome",
-			"value": "smarthome"
-		},
-		{
-			"label": "Accessories",
-			"value": "accessories"
-		}
-	]
+  "products": [
+    {
+      "id": "c419b69e-27ef-4860-b37e-d19e86e4f3ef",
+      "name": "Samsung Galaxy A15, 8/256 ГБ",
+      "description": "Samsung Galaxy A15 — это один из новейших представителей линейки Galaxy A, предназначенный для тех, кто ищет сбалансированный смартфон по доступной цене. Вот краткий обзор ключевых характеристик и особенностей данной модели с конфигурацией 8 ГБ оперативной памяти и 256 ГБ встроенной памяти.",
+      "category": "phones",
+      "price": 200,
+      "status": "published",
+      "releaseDate": "2022-05-31T19:00:00.000Z",
+      "createdAt": "2024-06-25T09:20:56.031Z"
+    },
+    {
+      "id": "e22088af-42b3-407d-9379-0d6372c5d2c5",
+      "name": "Aslbek",
+      "description": "Kucharov",
+      "category": "vr",
+      "price": 2000,
+      "status": "published",
+      "releaseDate": "2024-06-24T19:00:00.000Z",
+      "createdAt": "2024-06-25T11:01:50.265Z"
+    }
+  ],
+  "categories": [
+    {
+      "label": "Телефоны",
+      "value": "phones",
+      "id": "6292"
+    },
+    {
+      "label": "Ноутбуки",
+      "value": "laptops",
+      "id": "f30d"
+    },
+    {
+      "label": "Виртуальная реальность",
+      "value": "vr",
+      "id": "c036"
+    },
+    {
+      "label": "Консоли",
+      "value": "consoles",
+      "id": "1f6e"
+    },
+    {
+      "label": "Камеры",
+      "value": "cameras",
+      "id": "c601"
+    },
+    {
+      "label": "Умный дом",
+      "value": "smarthome",
+      "id": "d89b"
+    },
+    {
+      "label": "Аксессуары",
+      "value": "accessories",
+      "id": "9525"
+    }
+  ]
 }

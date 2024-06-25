@@ -1,4 +1,4 @@
-enum ProductStatuses {
+export enum ProductStatuses {
     hidden = "hidden",
     published = "published"
 }
