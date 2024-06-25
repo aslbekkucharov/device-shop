@@ -2,6 +2,7 @@ import App from "@/App"
 import Login from "@/views/login/Login"
 import Product from "@/views/product/Product"
 import Products from "@/views/products/Products"
+import NotFound from "@/pages/not-found/NotFound"
 
 import { createBrowserRouter } from "react-router-dom"
 
@@ -24,5 +25,9 @@ export const router = createBrowserRouter([
                 element: <Product />
             },
         ]
+    },
+    {
+        path: '*',
+        element: <NotFound />
     }
 ])
