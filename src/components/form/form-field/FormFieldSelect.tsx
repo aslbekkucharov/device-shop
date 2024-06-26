@@ -6,8 +6,8 @@ import classes from '@/components/form/form-field/form-field.module.scss'
 type Props = {
     label?: string
     selectProps?: SelectProps
-    meta: FieldMetaState<any>
-    input: FieldInputProps<any, HTMLElement>
+    meta: FieldMetaState<string>
+    input: FieldInputProps<string, HTMLElement>
 }
 
 export default function FormFieldSelect({ input, label, meta, selectProps }: Props) {

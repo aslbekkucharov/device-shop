@@ -1,18 +1,16 @@
 import axios from "axios"
 
-const api = axios.create({
+const $api = axios.create({
     baseURL: import.meta.env.VITE_BASE_API_URL
 })
 
-api.interceptors.request.use((config) => {
+$api.interceptors.request.use((config) => {
 
     let token = null
 
     if (!token) {
         token = localStorage.getItem('token')
-    }
-
-    if (token) {
+    } else {
         config.headers.Authorization = `Bearer ${token}`
     }
 
@@ -20,4 +18,4 @@ api.interceptors.request.use((config) => {
 
 }, () => { })
 
-export { api }
+export { $api }

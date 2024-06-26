@@ -10,14 +10,14 @@ export default function Header() {
 
     const navigate = useNavigate()
     const { isAuthenticated } = useAuth()
-    const { setIsProductAddModalVisible } = useGlobal()
+    const { setIsProductModalVisible } = useGlobal()
 
     function handleLogin() {
         navigate('/login')
     }
 
     function handleAddProduct() {
-        setIsProductAddModalVisible(() => true)
+        setIsProductModalVisible(() => true)
     }
 
     return (

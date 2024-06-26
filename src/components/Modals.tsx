@@ -2,11 +2,11 @@ import { useGlobal } from "@/hooks/useGlobal"
 import AddProductModal from "@/components/modals/AddProductModal"
 
 export default function Modals() {
-    const { isProductAddModalVisible } = useGlobal()
+    const { isProductModalVisible } = useGlobal()
 
     return (
         <>
-            <AddProductModal isOpen={isProductAddModalVisible} />
+            <AddProductModal isOpen={isProductModalVisible} />
         </>
     )
 }

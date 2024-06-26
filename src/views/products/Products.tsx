@@ -4,7 +4,7 @@ import { SearchOutlined } from '@ant-design/icons'
 import { useEffect, useMemo, useState } from 'react'
 import { Card, Empty, Input, Pagination, Select, Space } from 'antd'
 
-import { api } from '@/api'
+import { $api } from '@/api'
 import { debounce } from '@/utils'
 import { Product } from '@/types/product'
 import { useGlobal } from '@/hooks/useGlobal'
@@ -74,10 +74,10 @@ export default function Products() {
 
         return result
 
-    }, [pagination.current, filter])
+    }, [filter])
 
     useEffect(() => {
-        api.get('/products', { params }).then((res: AxiosResponse<PageableResponse<Product>>) => {
+        $api.get('/products', { params }).then((res: AxiosResponse<PageableResponse<Product>>) => {
             setProducts(res.data.data)
             setPagination((prevVal) => ({ ...prevVal, total: res.data.items }))
         })

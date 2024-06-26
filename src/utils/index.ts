@@ -1,12 +1,11 @@
 export function debounce<T extends (...args: any[]) => void>(callback: T, wait: number): T {
     let timeoutId: ReturnType<typeof setTimeout> | undefined
 
-    return function (this: any, ...args: Parameters<T>) {
-        const context = this
+    return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
 
         const later = () => {
             timeoutId = undefined
-            callback.apply(context, args)
+            callback.apply(this, args)
         }
 
         clearTimeout(timeoutId)

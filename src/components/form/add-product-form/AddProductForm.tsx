@@ -47,7 +47,7 @@ export default function AddProductForm({ handleSubmit, submitting }: FormRenderP
                             options: categories,
                             placeholder: "Выберите категорию",
                             notFoundContent: "Ничего не найдено",
-                            value: !!input.value ? input.value : null,
+                            value: input.value ? input.value : null,
                         }}
                     />
                 )}
@@ -71,7 +71,7 @@ export default function AddProductForm({ handleSubmit, submitting }: FormRenderP
                         meta={meta}
                         input={input}
                         label="Статус товара"
-                        selectProps={{ placeholder: 'Выберите статус товара', options: statuses, value: !!input.value ? input.value : null }}
+                        selectProps={{ placeholder: 'Выберите статус товара', options: statuses, value: input.value ? input.value : null }}
                     />
                 )}
             </Field>

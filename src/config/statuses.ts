@@ -1,4 +1,6 @@
-export const statuses = [
+import { Status } from "@/types"
+
+export const statuses: Status[] = [
     {
         label: 'Опубликован',
         value: 'published'
@@ -7,4 +9,4 @@ export const statuses = [
         label: 'Не опубликован',
         value: 'hidden'
     }
-]
+] 

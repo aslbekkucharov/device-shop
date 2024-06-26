@@ -1,12 +1,13 @@
+import type { Dayjs } from 'dayjs'
 import { DatePicker, type DatePickerProps } from 'antd'
 import { FieldInputProps, FieldMetaState } from 'react-final-form'
 import classes from '@/components/form/form-field/form-field.module.scss'
 
 type Props = {
     label?: string
-    meta: FieldMetaState<any>
     datePickerProps?: DatePickerProps
-    input: FieldInputProps<any, HTMLElement>
+    meta: FieldMetaState<Dayjs | null | undefined>
+    input: FieldInputProps<Dayjs | null | undefined, HTMLElement>
 }
 
 export default function FormFieldDatepicker({ input, label, meta, datePickerProps }: Props) {

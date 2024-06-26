@@ -1,4 +1,4 @@
-import { Input, InputProps } from 'antd'
+import { Input } from 'antd'
 import { TextAreaProps } from 'antd/es/input'
 import type { FieldInputProps, FieldMetaState } from 'react-final-form'
 
@@ -6,9 +6,9 @@ import classes from '@/components/form/form-field/form-field.module.scss'
 
 type Props = {
     label?: string
-    meta: FieldMetaState<any>
+    meta: FieldMetaState<string>
     textareaProps?: TextAreaProps
-    input: FieldInputProps<any, HTMLElement>
+    input: FieldInputProps<string, HTMLElement>
 }
 
 export default function FormFieldTextarea({ input, label, meta, textareaProps }: Props) {

@@ -3,7 +3,7 @@ import { AxiosResponse } from "axios"
 import { useParams } from "react-router-dom"
 import { useEffect, useMemo, useState } from "react"
 
-import { api } from "@/api"
+import { $api } from "@/api"
 import { formatDate, formatPrice } from "@/utils"
 import classes from '@/views/product/product.module.scss'
 import type { Product as ProductType } from "@/types/product"
@@ -22,7 +22,7 @@ export default function Product() {
                 hidden: 'Скрыт'
             }
 
-            return statuses[product?.status!]
+            return statuses[product.status]
         }
 
         return 'Неизвестен'
@@ -30,10 +30,10 @@ export default function Product() {
     }, [product])
 
     useEffect(() => {
-        api.get(`/products/${id}`).then((response: AxiosResponse<ProductType>) => {
+        $api.get(`/products/${id}`).then((response: AxiosResponse<ProductType>) => {
             setProduct(() => response.data)
         })
-    }, [])
+    }, [id])
 
     return (
 

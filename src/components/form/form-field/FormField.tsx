@@ -8,9 +8,9 @@ type Props = {
     label?: string
     placeholder?: string
     inputPrefix?: ReactNode
-    meta: FieldMetaState<any>
+    meta: FieldMetaState<string>
     inputType?: 'text' | 'tel' | 'password'
-    input: FieldInputProps<any, HTMLElement>
+    input: FieldInputProps<string, HTMLElement>
 }
 
 export default function FormField({ input, placeholder, label, meta, inputPrefix, inputType = 'text' }: Props) {

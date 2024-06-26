@@ -5,11 +5,11 @@ import { ValidationError } from "yup"
 import { Modal, ModalProps, message } from "antd"
 import { Form, FormRenderProps } from "react-final-form"
 
-import { api } from "@/api"
+import { $api } from "@/api"
 import { NewProductPayload } from "@/types"
 import { useGlobal } from "@/hooks/useGlobal"
 import { productSchema } from "@/validations"
-import AddProductForm from "@/components/form/AddProductForm/AddProductForm"
+import AddProductForm from "@/components/form/add-product-form/AddProductForm"
 
 type Props = {
     isOpen: boolean
@@ -21,12 +21,12 @@ export default function AddProductModal({ isOpen }: Props) {
         open: isOpen,
         footer: null,
         title: "Добавление товара",
-        onCancel: () => setIsProductAddModalVisible(false)
+        onCancel: () => setIsProductModalVisible(false)
     }
 
-    const { setIsProductAddModalVisible } = useGlobal()
+    const { setIsProductModalVisible } = useGlobal()
     const [messageApi, contextHolder] = message.useMessage()
-    const [initialValues, setInitialValues] = useState<NewProductPayload>()
+    const [initialValues] = useState<NewProductPayload>()
 
     function handleFormValidate(values: NewProductPayload) {
 
@@ -53,11 +53,11 @@ export default function AddProductModal({ isOpen }: Props) {
                 price: +payload.price
             }
 
-            const response = await api.post('/products', body)
+            const response = await $api.post('/products', body)
 
             if (response.status === 201) {
                 messageApi.success('Товар успешно создан!')
-                setIsProductAddModalVisible(false)
+                setIsProductModalVisible(false)
             }
 
         } catch (error) {

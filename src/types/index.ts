@@ -31,3 +31,13 @@ export interface NewProductPayload {
     releaseDate: string
     status: ProductStatuses
 }
+
+export interface Status {
+    label: string
+    value: string
+}
+
+export interface User {
+    username: string
+    password: string
+}
