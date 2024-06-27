@@ -2,16 +2,16 @@ import { Button } from "antd"
 import { Field, FormRenderProps } from "react-final-form"
 
 import { NewProductPayload } from "@/types"
-import { useGlobal } from "@/hooks/useGlobal"
+import { statuses } from "@/config/statuses"
+import { useAppSelector } from "@/hooks/app-hooks"
 import FormField from "@/components/form/form-field/FormField"
 import FormFieldSelect from "@/components/form/form-field/FormFieldSelect"
 import FormFieldTextarea from "@/components/form/form-field/FormFieldTextArea"
 import FormFieldDatepicker from "@/components/form/form-field/FormFieldDatepicker"
-import { statuses } from "@/config/statuses"
 
-export default function AddProductForm({ handleSubmit, submitting }: FormRenderProps<NewProductPayload>) {
+export default function AddProductForm({ handleSubmit, submitting, hasValidationErrors }: FormRenderProps<NewProductPayload>) {
 
-    const { categories } = useGlobal()
+    const categories = useAppSelector(state => state.global.categories)
 
     return (
         <form onSubmit={handleSubmit}>
@@ -87,7 +87,7 @@ export default function AddProductForm({ handleSubmit, submitting }: FormRenderP
                 )}
             </Field>
 
-            <Button block htmlType="submit" size="large" type="primary" disabled={submitting}>Добавить товар</Button>
+            <Button block htmlType="submit" size="large" type="primary" disabled={submitting || hasValidationErrors}>Добавить товар</Button>
         </form>
     )
 }

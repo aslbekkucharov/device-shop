@@ -1,8 +1,8 @@
-import { useGlobal } from "@/hooks/useGlobal"
+import { useAppSelector } from "@/hooks/app-hooks"
 import AddProductModal from "@/components/modals/AddProductModal"
 
 export default function Modals() {
-    const { isProductModalVisible } = useGlobal()
+    const isProductModalVisible = useAppSelector(state => state.global.isProductModalVisible)
 
     return (
         <>

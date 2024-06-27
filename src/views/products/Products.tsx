@@ -1,16 +1,18 @@
-import { AxiosResponse } from 'axios'
 import { Link } from 'react-router-dom'
 import { SearchOutlined } from '@ant-design/icons'
 import { useEffect, useMemo, useState } from 'react'
 import { Card, Empty, Input, Pagination, Select, Space } from 'antd'
 
-import { $api } from '@/api'
 import { debounce } from '@/utils'
 import { Product } from '@/types/product'
 import { useGlobal } from '@/hooks/useGlobal'
+import { useAppDispatch, useAppSelector } from '@/hooks/app-hooks'
+import { setCategories, setProducts } from '@/store/global/store'
 import classes from '@/views/products/products.module.scss'
 import ProductCard from '@/components/product-card/ProductCard'
 import { PageableResponse, Pagination as PaginationType } from '@/types'
+import { productsApi } from '@/services/products'
+import { categoryApi } from '@/services/category'
 
 interface Filter {
     category: string
@@ -18,7 +20,7 @@ interface Filter {
 }
 
 function ProductsContent(props: { products: Product[] }) {
-    if (props.products.length) {
+    if (props.products && props.products.length) {
         return (
             <div className="products-list">
                 {props.products.filter(p => p.status === 'published').map((product) => (
@@ -39,8 +41,9 @@ function ProductsContent(props: { products: Product[] }) {
 
 export default function Products() {
 
-    const { categories } = useGlobal()
-    const [products, setProducts] = useState<Product[]>([])
+    const dispatch = useAppDispatch()
+    const products = useAppSelector((state) => state.global.products)
+    const categories = useAppSelector((state) => state.global.categories)
     const [filter, setFilter] = useState<Filter>({ searchKey: '', category: '' })
     const [pagination, setPagination] = useState<PaginationType>({ perPage: 6, total: 0, current: 1 })
 
@@ -76,9 +79,16 @@ export default function Products() {
 
     }, [filter])
 
+    // Todo need to refactor
     useEffect(() => {
-        $api.get('/products', { params }).then((res: AxiosResponse<PageableResponse<Product>>) => {
-            setProducts(res.data.data)
+        categoryApi.getCategories().then(res => {
+            dispatch(setCategories(res.data))
+        })
+    }, [])
+
+    useEffect(() => {
+        productsApi.getProducts<PageableResponse<Product>>(params).then((res) => {
+            dispatch(setProducts(res.data.data))
             setPagination((prevVal) => ({ ...prevVal, total: res.data.items }))
         })
     }, [params])

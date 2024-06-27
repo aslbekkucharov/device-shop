@@ -2,22 +2,24 @@ import { clsx } from 'clsx'
 import { Button } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import { LoginOutlined, PlusCircleOutlined } from '@ant-design/icons'
-import classes from '@/components/layouts/header/header.module.scss'
+
 import { useAuth } from '@/hooks/useAuth'
-import { useGlobal } from '@/hooks/useGlobal'
+import { useAppDispatch } from '@/hooks/app-hooks'
+import { setProductModalVisibility } from '@/store/global/store'
+import classes from '@/components/layouts/header/header.module.scss'
 
 export default function Header() {
 
     const navigate = useNavigate()
+    const dispatch = useAppDispatch()
     const { isAuthenticated } = useAuth()
-    const { setIsProductModalVisible } = useGlobal()
 
     function handleLogin() {
         navigate('/login')
     }
 
     function handleAddProduct() {
-        setIsProductModalVisible(() => true)
+        dispatch(setProductModalVisibility(true))
     }
 
     return (

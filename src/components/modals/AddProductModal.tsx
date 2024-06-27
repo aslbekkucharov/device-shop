@@ -6,10 +6,14 @@ import { Modal, ModalProps, message } from "antd"
 import { Form, FormRenderProps } from "react-final-form"
 
 import { $api } from "@/api"
-import { NewProductPayload } from "@/types"
+import { NewProductPayload, PageableResponse } from "@/types"
 import { useGlobal } from "@/hooks/useGlobal"
 import { productSchema } from "@/validations"
 import AddProductForm from "@/components/form/add-product-form/AddProductForm"
+import { useAppDispatch } from "@/hooks/app-hooks"
+import { productsApi } from "@/services/products"
+import { setProductModalVisibility, setProducts } from "@/store/global/store"
+import { Product } from "@/types/product"
 
 type Props = {
     isOpen: boolean
@@ -21,12 +25,12 @@ export default function AddProductModal({ isOpen }: Props) {
         open: isOpen,
         footer: null,
         title: "Добавление товара",
-        onCancel: () => setIsProductModalVisible(false)
+        onCancel: () => dispatch(setProductModalVisibility(false))
     }
 
-    const { setIsProductModalVisible } = useGlobal()
-    const [messageApi, contextHolder] = message.useMessage()
+    const dispatch = useAppDispatch()
     const [initialValues] = useState<NewProductPayload>()
+    const [messageApi, contextHolder] = message.useMessage()
 
     function handleFormValidate(values: NewProductPayload) {
 
@@ -45,6 +49,9 @@ export default function AddProductModal({ isOpen }: Props) {
 
     async function handleFormSubmit(payload: NewProductPayload) {
         try {
+            const messageKey = 'updatable'
+
+            messageApi.open({ key: messageKey, type: 'loading', content: 'Подождите, ваш товар создается...' })
 
             const body = {
                 ...payload,
@@ -56,12 +63,15 @@ export default function AddProductModal({ isOpen }: Props) {
             const response = await $api.post('/products', body)
 
             if (response.status === 201) {
-                messageApi.success('Товар успешно создан!')
-                setIsProductModalVisible(false)
+
+                productsApi.getProducts<PageableResponse<Product>>({ _page: 1, _per_page: 6 }).then(res => {
+                    messageApi.open({ key: messageKey, type: 'success', content: 'Товар успешно создан!' })
+                    dispatch(setProducts(res.data.data))
+                    dispatch(setProductModalVisibility(false))
+                })
             }
 
         } catch (error) {
-            console.log(error)
             messageApi.success('Что-то пошло не так при создании товара')
         }
     }
