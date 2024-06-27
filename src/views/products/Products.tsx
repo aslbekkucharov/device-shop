@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom'
-import { EllipsisOutlined, SearchOutlined } from '@ant-design/icons'
-import { useEffect, useMemo, useState } from 'react'
-import { Button, Card, Dropdown, Empty, Input, MenuProps, Pagination, Select, Space } from 'antd'
+import { SearchOutlined } from '@ant-design/icons'
+import { SyntheticEvent, useEffect, useMemo, useState } from 'react'
+import { Button, Card, Empty, Input, Pagination, Select, Space } from 'antd'
 
 import { debounce } from '@/utils'
-import { Product } from '@/types/product'
+import type { Product } from '@/types/product'
 import { productsApi } from '@/services/products'
 import { categoryApi } from '@/services/category'
 import classes from '@/views/products/products.module.scss'
 import ProductCard from '@/components/product-card/ProductCard'
-import { setCategories, setProducts } from '@/store/global/store'
+import { setCategories, setEditingProduct, setIsProductEditing, setProductModalVisibility, setProducts } from '@/store/global/store'
 import { useAppDispatch, useAppSelector } from '@/hooks/app-hooks'
 import { PageableResponse, Pagination as PaginationType } from '@/types'
 
@@ -20,35 +20,39 @@ interface Filter {
 
 function ProductsContent(props: { products: Product[] }) {
 
+    const dispatch = useAppDispatch()
+
     const publishedProducts = props.products.filter(p => p.status === 'published')
 
-    const menus: MenuProps['items'] = [
-        {
-            key: 2,
-            label: 'Редактировать'
-        },
-        {
-            key: 1,
-            danger: true,
-            label: 'Удалить'
-        }
-    ]
-
-    const menuConfig: MenuProps = {
-        items: menus
+    function handleProductEdit(event: SyntheticEvent, product: Product) {
+        event.preventDefault()
+        dispatch(setIsProductEditing(true))
+        dispatch(setEditingProduct(product))
+        dispatch(setProductModalVisibility(true))
     }
 
-    if (props.products && props.products.length) {
+    async function handleProductDelete(event: SyntheticEvent, id: string) {
+        event.preventDefault()
+        await productsApi.deleteProduct(id)
+        productsApi.getProducts<PageableResponse<Product>>({ _page: 1, _per_page: 6 }).then((res) => {
+            dispatch(setProducts(res.data.data))
+        })
+    }
+
+    if (props.products?.length) {
         return (
             <div className="products-list">
                 {publishedProducts.map((product) => (
                     <Link to={`/product/${product.id}`} key={product.id}>
                         <ProductCard data={product}>
-                            <Dropdown menu={menuConfig} trigger={['click']}>
-                                <Button onClick={(e) => e.preventDefault()}>
-                                    <EllipsisOutlined style={{ fontSize: 24 }} />
+                            <>
+                                <Button onClick={(e) => handleProductDelete(e, product.id)} block>
+                                    Удалить
                                 </Button>
-                            </Dropdown>
+                                <Button type='primary' onClick={(e) => handleProductEdit(e, product)} block>
+                                    Редактировать
+                                </Button>
+                            </>
                         </ProductCard>
                     </Link>
                 ))}

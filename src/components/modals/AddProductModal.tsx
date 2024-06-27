@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react"
+import dayjs from 'dayjs'
 import { setIn } from "final-form"
 import { v4 as uuidv4 } from 'uuid'
 import { ValidationError } from "yup"
+import { useEffect, useState } from "react"
 import { Modal, ModalProps, message } from "antd"
 import { Form, FormRenderProps } from "react-final-form"
 
@@ -9,9 +10,9 @@ import { $api } from "@/api"
 import { productSchema } from "@/validations"
 import type { Product } from "@/types/product"
 import { productsApi } from "@/services/products"
-import { useAppDispatch } from "@/hooks/app-hooks"
+import { useAppDispatch, useAppSelector } from "@/hooks/app-hooks"
 import type { NewProductPayload, PageableResponse } from "@/types"
-import { setProductModalVisibility, setProducts } from "@/store/global/store"
+import { setEditingProduct, setIsProductEditing, setProductModalVisibility, setProducts } from "@/store/global/store"
 import AddProductForm from "@/components/form/add-product-form/AddProductForm"
 
 type Props = {
@@ -20,17 +21,19 @@ type Props = {
 
 export default function AddProductModal({ isOpen }: Props) {
 
+    const dispatch = useAppDispatch()
+    const [messageApi, contextHolder] = message.useMessage()
+    const [initialValues, setInitialValues] = useState<NewProductPayload>()
+    const editingProduct = useAppSelector((state) => state.global.editingProduct)
+    const isProductEditing = useAppSelector((state) => state.global.isProductEditing)
+
     const config: ModalProps = {
         open: isOpen,
         footer: null,
         destroyOnClose: true,
-        title: "Добавление товара",
-        onCancel: () => dispatch(setProductModalVisibility(false))
+        onCancel: () => dispatch(setProductModalVisibility(false)),
+        title: isProductEditing ? 'Редактирование товара' : 'Добавление товара'
     }
-
-    const dispatch = useAppDispatch()
-    const [messageApi, contextHolder] = message.useMessage()
-    const [initialValues, setInitialValues] = useState<NewProductPayload>()
 
     function handleFormValidate(values: NewProductPayload) {
 
@@ -88,11 +91,29 @@ export default function AddProductModal({ isOpen }: Props) {
         }
     }
 
+    useEffect(() => {
+
+        if (isOpen && isProductEditing) {
+            console.log(editingProduct)
+            setInitialValues((prevVal) => ({
+                ...prevVal,
+                ...editingProduct,
+                releaseDate: dayjs(editingProduct.releaseDate)
+            }))
+        }
+
+        if (!isOpen) {
+            dispatch(setIsProductEditing(false))
+            dispatch(setEditingProduct({} as Product))
+        }
+
+    }, [isOpen])
+
     return (
         <Modal {...config}>
             {contextHolder}
             <Form
-                
+
                 onSubmit={handleFormSubmit}
                 initialValues={initialValues}
                 validate={handleFormValidate}

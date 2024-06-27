@@ -8,7 +8,7 @@ export const productsApi = {
         return $api.get('/products', { params })
     },
 
-    getProductDetail(id: number): Promise<AxiosResponse<Product>> {
+    getProductDetail(id: string): Promise<AxiosResponse<Product>> {
         return $api.get(`/products/${id}`)
     },
 
@@ -16,7 +16,11 @@ export const productsApi = {
         return $api.post('/products', body)
     },
 
-    updateProduct(id: number, payload: NewProductPayload): Promise<AxiosResponse<Product>> {
+    updateProduct(id: string, payload: NewProductPayload): Promise<AxiosResponse<Product>> {
         return $api.put(`/products/${id}`, payload)
+    },
+
+    deleteProduct(id: string) {
+        return $api.delete(`/products/${id}`)
     }
 }

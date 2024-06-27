@@ -1,3 +1,4 @@
+import { Dayjs } from 'dayjs'
 import { ProductStatuses } from "./product"
 
 export interface PageableResponse<T> {
@@ -28,8 +29,8 @@ export interface NewProductPayload {
     category: string
     createdAt: string
     description: string
-    releaseDate: string
     status: ProductStatuses
+    releaseDate: string | Dayjs
 }
 
 export interface Status {

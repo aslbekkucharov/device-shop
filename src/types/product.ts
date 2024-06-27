@@ -1,3 +1,4 @@
+import { Dayjs } from 'dayjs';
 export type ProductStatuses = 'hidden' | 'published'
 
 export interface Product {
@@ -7,6 +8,6 @@ export interface Product {
     category: string
     createdAt: string
     description: string
-    releaseDate: string
     status: ProductStatuses
+    releaseDate: string | Dayjs
 }

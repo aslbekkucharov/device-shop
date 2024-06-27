@@ -14,11 +14,13 @@ export default function ProductCard(props: Props) {
             <span className={classes['product-card__head']}>
                 <span className={classes['product-card__head-row']}>
                     <span className={classes['product-card__title']}>{props.data.name}</span>
-                    {props.children}
                 </span>
                 <span className={classes['product-card__price']}>{formatPrice(props.data.price)}</span>
             </span>
             <span className={classes['product-card__excerpt']}>{props.data.description}</span>
+            <span className={classes['product-card__footer']}>
+                {props.children}
+            </span>
         </span>
     )
 }

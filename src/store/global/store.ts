@@ -1,17 +1,22 @@
 import type { Product } from "@/types/product"
 import type { Category } from "@/types/category"
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { NewProductPayload } from "@/types"
 
 interface GlobalStateType {
     products: Product[]
     categories: Category[]
+    editingProduct: NewProductPayload
+    isProductEditing: boolean
     isProductModalVisible: boolean
 }
 
 const initialState: GlobalStateType = {
     products: [],
     categories: [],
-    isProductModalVisible: false
+    isProductEditing: false,
+    isProductModalVisible: false,
+    editingProduct: {} as NewProductPayload
 }
 
 export const globalState = createSlice({
@@ -20,6 +25,14 @@ export const globalState = createSlice({
     reducers: {
         setProducts(state, action: PayloadAction<Product[]>) {
             state.products = action.payload
+        },
+
+        setEditingProduct(state, action: PayloadAction<NewProductPayload>) {
+            state.editingProduct = action.payload
+        },
+
+        setIsProductEditing(state, action: PayloadAction<boolean>) {
+            state.isProductEditing = action.payload
         },
 
         setCategories(state, action: PayloadAction<Category[]>) {
@@ -32,6 +45,6 @@ export const globalState = createSlice({
     }
 })
 
-export const { setCategories, setProducts, setProductModalVisibility } = globalState.actions
+export const { setCategories, setProducts, setProductModalVisibility, setEditingProduct, setIsProductEditing } = globalState.actions
 
 export default globalState.reducer

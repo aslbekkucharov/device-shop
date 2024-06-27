@@ -16,12 +16,10 @@ export default function App() {
     <ConfigProvider theme={themeConfiguration} locale={ruRu}>
       <Provider store={store}>
         <AuthProvider>
-          {/* <GlobalProvider> */}
           <Header />
           <Main />
           <Footer />
           <Modals />
-          {/* </GlobalProvider> */}
         </AuthProvider>
       </Provider>
     </ConfigProvider>

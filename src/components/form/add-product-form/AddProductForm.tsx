@@ -12,6 +12,7 @@ import FormFieldDatepicker from "@/components/form/form-field/FormFieldDatepicke
 export default function AddProductForm({ handleSubmit, submitting, hasValidationErrors }: FormRenderProps<NewProductPayload>) {
 
     const categories = useAppSelector(state => state.global.categories)
+    const isEditingProduct = useAppSelector(state => state.global.isProductEditing)
 
     return (
         <form onSubmit={handleSubmit}>
@@ -94,7 +95,7 @@ export default function AddProductForm({ handleSubmit, submitting, hasValidation
                 type="primary"
                 disabled={submitting || hasValidationErrors}
             >
-                Добавить товар
+                { isEditingProduct ? 'Сохранить изменения' : 'Добавить товар' }
             </Button>
         </form>
     )

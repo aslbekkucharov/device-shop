@@ -49,7 +49,9 @@
 		-webkit-box-orient: vertical;
 	}
 
-	&__menu {
-		margin-left: auto;
+	&__footer {
+		gap: 10px;
+		display: flex;
+		margin-top: 20px;
 	}
 }
