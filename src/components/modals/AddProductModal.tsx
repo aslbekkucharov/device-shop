@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { setIn } from "final-form"
 import { v4 as uuidv4 } from 'uuid'
 import { ValidationError } from "yup"
@@ -6,14 +6,13 @@ import { Modal, ModalProps, message } from "antd"
 import { Form, FormRenderProps } from "react-final-form"
 
 import { $api } from "@/api"
-import { NewProductPayload, PageableResponse } from "@/types"
-import { useGlobal } from "@/hooks/useGlobal"
 import { productSchema } from "@/validations"
-import AddProductForm from "@/components/form/add-product-form/AddProductForm"
-import { useAppDispatch } from "@/hooks/app-hooks"
+import type { Product } from "@/types/product"
 import { productsApi } from "@/services/products"
+import { useAppDispatch } from "@/hooks/app-hooks"
+import type { NewProductPayload, PageableResponse } from "@/types"
 import { setProductModalVisibility, setProducts } from "@/store/global/store"
-import { Product } from "@/types/product"
+import AddProductForm from "@/components/form/add-product-form/AddProductForm"
 
 type Props = {
     isOpen: boolean
@@ -24,13 +23,14 @@ export default function AddProductModal({ isOpen }: Props) {
     const config: ModalProps = {
         open: isOpen,
         footer: null,
+        destroyOnClose: true,
         title: "Добавление товара",
         onCancel: () => dispatch(setProductModalVisibility(false))
     }
 
     const dispatch = useAppDispatch()
-    const [initialValues] = useState<NewProductPayload>()
     const [messageApi, contextHolder] = message.useMessage()
+    const [initialValues, setInitialValues] = useState<NewProductPayload>()
 
     function handleFormValidate(values: NewProductPayload) {
 
@@ -45,6 +45,18 @@ export default function AddProductModal({ isOpen }: Props) {
 
             return {}
         }
+    }
+
+    function resetFormOnModalClose() {
+        setInitialValues({
+            name: '',
+            price: 0,
+            category: '',
+            createdAt: '',
+            description: '',
+            releaseDate: '',
+            status: 'published'
+        })
     }
 
     async function handleFormSubmit(payload: NewProductPayload) {
@@ -63,10 +75,10 @@ export default function AddProductModal({ isOpen }: Props) {
             const response = await $api.post('/products', body)
 
             if (response.status === 201) {
-
                 productsApi.getProducts<PageableResponse<Product>>({ _page: 1, _per_page: 6 }).then(res => {
                     messageApi.open({ key: messageKey, type: 'success', content: 'Товар успешно создан!' })
                     dispatch(setProducts(res.data.data))
+                    resetFormOnModalClose()
                     dispatch(setProductModalVisibility(false))
                 })
             }
@@ -80,6 +92,7 @@ export default function AddProductModal({ isOpen }: Props) {
         <Modal {...config}>
             {contextHolder}
             <Form
+                
                 onSubmit={handleFormSubmit}
                 initialValues={initialValues}
                 validate={handleFormValidate}

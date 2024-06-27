@@ -1,7 +1,4 @@
-export enum ProductStatuses {
-    hidden = "hidden",
-    published = "published"
-}
+export type ProductStatuses = 'hidden' | 'published'
 
 export interface Product {
     id: string

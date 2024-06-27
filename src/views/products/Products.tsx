@@ -1,18 +1,17 @@
 import { Link } from 'react-router-dom'
-import { SearchOutlined } from '@ant-design/icons'
+import { EllipsisOutlined, SearchOutlined } from '@ant-design/icons'
 import { useEffect, useMemo, useState } from 'react'
-import { Card, Empty, Input, Pagination, Select, Space } from 'antd'
+import { Button, Card, Dropdown, Empty, Input, MenuProps, Pagination, Select, Space } from 'antd'
 
 import { debounce } from '@/utils'
 import { Product } from '@/types/product'
-import { useGlobal } from '@/hooks/useGlobal'
-import { useAppDispatch, useAppSelector } from '@/hooks/app-hooks'
-import { setCategories, setProducts } from '@/store/global/store'
-import classes from '@/views/products/products.module.scss'
-import ProductCard from '@/components/product-card/ProductCard'
-import { PageableResponse, Pagination as PaginationType } from '@/types'
 import { productsApi } from '@/services/products'
 import { categoryApi } from '@/services/category'
+import classes from '@/views/products/products.module.scss'
+import ProductCard from '@/components/product-card/ProductCard'
+import { setCategories, setProducts } from '@/store/global/store'
+import { useAppDispatch, useAppSelector } from '@/hooks/app-hooks'
+import { PageableResponse, Pagination as PaginationType } from '@/types'
 
 interface Filter {
     category: string
@@ -20,12 +19,37 @@ interface Filter {
 }
 
 function ProductsContent(props: { products: Product[] }) {
+
+    const publishedProducts = props.products.filter(p => p.status === 'published')
+
+    const menus: MenuProps['items'] = [
+        {
+            key: 2,
+            label: 'Редактировать'
+        },
+        {
+            key: 1,
+            danger: true,
+            label: 'Удалить'
+        }
+    ]
+
+    const menuConfig: MenuProps = {
+        items: menus
+    }
+
     if (props.products && props.products.length) {
         return (
             <div className="products-list">
-                {props.products.filter(p => p.status === 'published').map((product) => (
+                {publishedProducts.map((product) => (
                     <Link to={`/product/${product.id}`} key={product.id}>
-                        <ProductCard data={product} />
+                        <ProductCard data={product}>
+                            <Dropdown menu={menuConfig} trigger={['click']}>
+                                <Button onClick={(e) => e.preventDefault()}>
+                                    <EllipsisOutlined style={{ fontSize: 24 }} />
+                                </Button>
+                            </Dropdown>
+                        </ProductCard>
                     </Link>
                 ))}
             </div>
