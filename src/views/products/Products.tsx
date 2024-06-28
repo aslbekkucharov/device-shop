@@ -174,7 +174,6 @@ export default function Products() {
 
                 <Space wrap align="start">
                     <Input size="large" placeholder="Искать товар" prefix={<SearchOutlined style={{ color: 'rgba(0,0,0,.25)' }} />} onChange={(event) => handleSearchInputChange(event.target.value)} />
-
                     <Select
                         size="large"
                         options={categories}
