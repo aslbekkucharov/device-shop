@@ -12,6 +12,7 @@ module.exports = {
   plugins: ['react-refresh'],
   rules: {
     'react/react-in-jsx-scope': ['off'],
+    'react-hooks/exhaustive-deps': ['off'],
     '@typescript-eslint/no-explicit-any': ['error', { ignoreRestArgs: true }],
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
   },

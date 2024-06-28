@@ -1,6 +1,7 @@
 .products {
 	&__head {
 		display: flex;
+		gap: 20px;
 		align-items: center;
 		justify-content: space-between;
 		margin-bottom: 30px;
@@ -19,5 +20,21 @@
 		display: flex;
 		justify-content: center;
 		margin-top: 30px;
+	}
+}
+
+@media (max-width: 575px) {
+	.products {
+		&__head {
+			flex-wrap: wrap;
+
+			.ant-space-item {
+				width: 100% !important;
+			}
+		}
+
+		&__select {
+			width: 100%;
+		}
 	}
 }

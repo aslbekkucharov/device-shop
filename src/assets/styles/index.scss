@@ -10,7 +10,8 @@
 
 html,
 body,
-#root {
+#root,
+.ant-app {
 	min-height: 100vh;
 }
 
@@ -19,7 +20,7 @@ body {
 	font-family: 'Open Sans', sans-serif;
 }
 
-#root {
+.ant-app {
 	display: flex;
 	flex-direction: column;
 }
@@ -59,4 +60,16 @@ footer {
 
 .text-gray {
 	color: gray;
+}
+
+@media (max-width: 991px) {
+	.products-list {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 768px) {
+	.products-list {
+		grid-template-columns: repeat(1, minmax(0, 1fr));
+	}
 }

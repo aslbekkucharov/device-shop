@@ -3,7 +3,7 @@ import { setIn } from "final-form"
 import { v4 as uuidv4 } from 'uuid'
 import { ValidationError } from "yup"
 import { useEffect, useState } from "react"
-import { Modal, ModalProps, message } from "antd"
+import { App, Modal, ModalProps } from "antd"
 import { Form, FormRenderProps } from "react-final-form"
 
 import { $api } from "@/api"
@@ -12,8 +12,8 @@ import type { Product } from "@/types/product"
 import { productsApi } from "@/services/products"
 import { useAppDispatch, useAppSelector } from "@/hooks/app-hooks"
 import type { NewProductPayload, PageableResponse } from "@/types"
-import { setEditingProduct, setIsProductEditing, setProductModalVisibility, setProducts } from "@/store/global/store"
 import AddProductForm from "@/components/form/add-product-form/AddProductForm"
+import { setEditingProduct, setIsProductEditing, setProductModalVisibility, setProducts } from "@/store/global/store"
 
 type Props = {
     isOpen: boolean
@@ -21,8 +21,8 @@ type Props = {
 
 export default function AddProductModal({ isOpen }: Props) {
 
+    const { message } = App.useApp()
     const dispatch = useAppDispatch()
-    const [messageApi, contextHolder] = message.useMessage()
     const [initialValues, setInitialValues] = useState<NewProductPayload>()
     const editingProduct = useAppSelector((state) => state.global.editingProduct)
     const isProductEditing = useAppSelector((state) => state.global.isProductEditing)
@@ -33,6 +33,18 @@ export default function AddProductModal({ isOpen }: Props) {
         destroyOnClose: true,
         onCancel: () => dispatch(setProductModalVisibility(false)),
         title: isProductEditing ? 'Редактирование товара' : 'Добавление товара'
+    }
+
+    function resetFormOnModalClose() {
+        setInitialValues({
+            name: '',
+            price: 0,
+            category: '',
+            createdAt: '',
+            description: '',
+            releaseDate: '',
+            status: 'published'
+        })
     }
 
     function handleFormValidate(values: NewProductPayload) {
@@ -50,19 +62,8 @@ export default function AddProductModal({ isOpen }: Props) {
         }
     }
 
-    function resetFormOnModalClose() {
-        setInitialValues({
-            name: '',
-            price: 0,
-            category: '',
-            createdAt: '',
-            description: '',
-            releaseDate: '',
-            status: 'published'
-        })
-    }
-
     async function handleFormSubmit(payload: NewProductPayload) {
+        const successMessageContent = isProductEditing ? 'Продукт успешно сохранён' : 'Продукт успешно создан'
         const loadingMessageContent = isProductEditing ? 'Подождите, ваш товар сохраняется...' : 'Подождите, ваш товар создается...'
         const errorMessageContent = isProductEditing ? 'Возникла непредвиденная ошибка при сохранении товара' : 'Возникла непредвиденная ошибка при создании товара'
 
@@ -71,7 +72,7 @@ export default function AddProductModal({ isOpen }: Props) {
             const method = isProductEditing ? 'put' : 'post'
             const endpoint = isProductEditing ? `/products/${editingProduct.id}` : '/products'
 
-            messageApi.loading(loadingMessageContent, 1000)
+            message.loading(loadingMessageContent)
 
             const body = {
                 ...payload,
@@ -83,14 +84,17 @@ export default function AddProductModal({ isOpen }: Props) {
             const response = await $api[method](endpoint, body)
 
             if (response.status >= 200 && response.status <= 300) {
+                message.success(successMessageContent)
+                dispatch(setProductModalVisibility(false))
+
                 productsApi.getProducts<PageableResponse<Product>>({ _page: 1, _per_page: 6 }).then(res => {
                     dispatch(setProducts(res.data.data))
-                    dispatch(setProductModalVisibility(false))
                 })
+
             }
 
         } catch (error) {
-            messageApi.error(errorMessageContent, 1000)
+            message.error(errorMessageContent)
         }
     }
 
@@ -114,9 +118,7 @@ export default function AddProductModal({ isOpen }: Props) {
 
     return (
         <Modal {...config}>
-            {contextHolder}
             <Form
-
                 onSubmit={handleFormSubmit}
                 initialValues={initialValues}
                 validate={handleFormValidate}

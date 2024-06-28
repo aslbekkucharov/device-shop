@@ -1,10 +1,10 @@
 import { $api } from '@/api'
-import { NewProductPayload } from '@/types'
-import { Product } from '@/types/product'
-import { AxiosResponse } from 'axios'
+import type { AxiosResponse } from 'axios'
+import type { Product } from '@/types/product'
+import type { NewProductPayload, Primitive } from '@/types'
 
 export const productsApi = {
-    getProducts<T>(params?: Record<string, any>): Promise<AxiosResponse<T>> {
+    getProducts<T>(params?: Record<string, Primitive | object>): Promise<AxiosResponse<T>> {
         return $api.get('/products', { params })
     },
 

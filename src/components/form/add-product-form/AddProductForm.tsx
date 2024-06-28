@@ -6,6 +6,7 @@ import type { NewProductPayload } from "@/types"
 import { useAppSelector } from "@/hooks/app-hooks"
 import FormField from "@/components/form/form-field/FormField"
 import FormFieldSelect from "@/components/form/form-field/FormFieldSelect"
+import FormFieldUploader from "@/components/form/form-field/FormFieldUploader"
 import FormFieldTextarea from "@/components/form/form-field/FormFieldTextArea"
 import FormFieldDatepicker from "@/components/form/form-field/FormFieldDatepicker"
 
@@ -88,6 +89,21 @@ export default function AddProductForm({ handleSubmit, submitting, hasValidation
                 )}
             </Field>
 
+            <Field name="image">
+                {({ input, meta }) => (
+                    <FormFieldUploader
+                        meta={meta}
+                        input={input}
+                        label="Изображение для товара (опционально)"
+                        uploadProps={{
+                            maxCount: 1,
+                            accept: '.jpg,.png,.jpeg',
+                            action: import.meta.env.VITE_UPLOADER_BASE_API_URL + '/upload?key=' + import.meta.env.VITE_UPLOADER_API_TOKEN
+                        }}
+                    />
+                )}
+            </Field>
+
             <Button
                 block
                 htmlType="submit"
@@ -95,7 +111,7 @@ export default function AddProductForm({ handleSubmit, submitting, hasValidation
                 type="primary"
                 disabled={submitting || hasValidationErrors}
             >
-                { isEditingProduct ? 'Сохранить изменения' : 'Добавить товар' }
+                {isEditingProduct ? 'Сохранить изменения' : 'Добавить товар'}
             </Button>
         </form>
     )

@@ -1,19 +1,18 @@
 import { Link } from 'react-router-dom'
 import { QuestionCircleOutlined, SearchOutlined } from '@ant-design/icons'
 import { type SyntheticEvent, useEffect, useMemo, useState } from 'react'
-import { Button, Card, Empty, Input, Pagination, Popconfirm, Select, Space, message } from 'antd'
+import { App, Button, Card, Empty, Input, Pagination, Popconfirm, Select, Space } from 'antd'
 
 import { debounce } from '@/utils'
 import type { PopconfirmProps } from 'antd'
 import { useAuth } from '@/hooks/useAuth'
 import type { Product } from '@/types/product'
 import { productsApi } from '@/services/products'
-import { categoryApi } from '@/services/category'
 import classes from '@/views/products/products.module.scss'
 import ProductCard from '@/components/product-card/ProductCard'
 import { useAppDispatch, useAppSelector } from '@/hooks/app-hooks'
 import type { PageableResponse, Pagination as PaginationType } from '@/types'
-import { setCategories, setEditingProduct, setIsProductEditing, setProductModalVisibility, setProducts } from '@/store/global/store'
+import { setEditingProduct, setIsProductEditing, setProductModalVisibility, setProducts } from '@/store/global/store'
 
 interface Filter {
     category: string
@@ -22,9 +21,9 @@ interface Filter {
 
 function ProductsContent(props: { products: Product[] }) {
 
+    const { message } = App.useApp()
     const dispatch = useAppDispatch()
     const { isAuthenticated } = useAuth()
-    const [messageApi, contextHolder] = message.useMessage()
 
     const productsList = isAuthenticated ? props.products : props.products.filter(p => p.status === 'published')
 
@@ -49,7 +48,7 @@ function ProductsContent(props: { products: Product[] }) {
 
         try {
 
-            messageApi.open({
+            message.open({
                 duration: 1000,
                 key: messageKey,
                 type: 'loading',
@@ -58,7 +57,7 @@ function ProductsContent(props: { products: Product[] }) {
 
             await productsApi.deleteProduct(id).then(res => {
                 if (res.status >= 200 && res.status <= 300) {
-                    messageApi.open({
+                    message.open({
                         key: messageKey,
                         type: 'success',
                         content: 'Товар был успешно удален'
@@ -71,7 +70,7 @@ function ProductsContent(props: { products: Product[] }) {
             })
 
         } catch (error) {
-            messageApi.open({
+            message.open({
                 type: 'error',
                 duration: 1000,
                 key: messageKey,
@@ -83,7 +82,6 @@ function ProductsContent(props: { products: Product[] }) {
     if (props.products?.length) {
         return (
             <div className="products-list">
-                {contextHolder}
                 {productsList.map((product) => (
                     <Link to={`/product/${product.id}`} key={product.id}>
                         <ProductCard data={product}>
@@ -151,13 +149,6 @@ export default function Products() {
 
     }, [filter])
 
-    // Todo need to refactor
-    useEffect(() => {
-        categoryApi.getCategories().then(res => {
-            dispatch(setCategories(res.data))
-        })
-    }, [])
-
     useEffect(() => {
         productsApi.getProducts<PageableResponse<Product>>(params).then((res) => {
             dispatch(setProducts(res.data.data))
@@ -170,7 +161,7 @@ export default function Products() {
             <div className={classes.products__head}>
                 <h3 className={classes.products__title}>Товары</h3>
 
-                <Space>
+                <Space wrap align='start'>
                     <Input
                         size='large'
                         placeholder='Искать товар'

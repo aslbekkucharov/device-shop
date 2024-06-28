@@ -1,5 +1,6 @@
 .product-card {
-	display: block;
+	display: flex;
+	flex-direction: column;
 	padding: 20px;
 	height: 100%;
 	border-radius: 8px;
@@ -15,20 +16,27 @@
 		width: 100%;
 		display: flex;
 		margin-bottom: 15px;
-		flex-direction: column;
 		align-items: flex-start;
+		flex: 0 0 auto;
 	}
 
-	&__head-row {
+	&__head-col {
 		width: 100%;
 		display: flex;
-		align-items: center;
+		gap: 8px;
+		flex-direction: column;
+		align-items: flex-start;
 		justify-content: space-between;
 	}
 
 	&__title {
+		font-size: 17px;
 		font-weight: 600;
 		color: #000000;
+	}
+
+	&__img {
+		border-radius: 6px;
 	}
 
 	&__price {
@@ -37,7 +45,11 @@
 		color: #ffffff;
 		background-color: #000000;
 		border-radius: 20px;
-		padding: 5px 10px;
+		padding: 2px 10px;
+	}
+
+	&__content {
+		flex: 1 0 auto;
 	}
 
 	&__excerpt {
@@ -53,5 +65,6 @@
 		gap: 10px;
 		display: flex;
 		margin-top: 20px;
+		flex: 0 0 auto;
 	}
 }

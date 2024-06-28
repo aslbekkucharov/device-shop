@@ -6,7 +6,7 @@ const $api = axios.create({
 
 $api.interceptors.request.use((config) => {
 
-    let token = null
+    let token: string | null = null
 
     if (!token) {
         token = localStorage.getItem('token')

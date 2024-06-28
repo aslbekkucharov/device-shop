@@ -42,6 +42,15 @@ export default function Product() {
             ?
 
             <div className={classes['product-page']}>
+
+                {
+                    product.image ?
+                        <div className={classes['product-page__img']}>
+                            <img src={product.image} />
+                        </div>
+                        : null
+                }
+
                 <h2 className={classes['product-page__title']}>{product.name}</h2>
 
                 <div className={classes['product-page-info']}>
