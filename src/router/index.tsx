@@ -1,14 +1,14 @@
-import App from "@/App"
-import Login from "@/views/login/Login"
-import Product from "@/views/product/Product"
-import Products from "@/views/products/Products"
-import NotFound from "@/pages/not-found/NotFound"
+import App from '@/App'
+import Login from '@/views/login/Login'
+import Product from '@/views/product/Product'
+import Products from '@/views/products/Products'
+import NotFound from '@/pages/not-found/NotFound'
 
-import { createBrowserRouter } from "react-router-dom"
+import { createBrowserRouter } from 'react-router-dom'
 
 export const router = createBrowserRouter([
     {
-        path: "/",
+        path: '/',
         element: <App />,
 
         children: [
@@ -18,12 +18,12 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'login',
-                element: <Login />,
+                element: <Login />
             },
             {
                 path: 'product/:id',
                 element: <Product />
-            },
+            }
         ]
     },
     {

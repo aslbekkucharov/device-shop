@@ -1,74 +1,74 @@
 .not-found-page {
-	display: flex;
-	padding: 30px;
-	min-height: 100vh;
-	align-items: center;
-	flex-direction: column;
-	justify-content: center;
+    display: flex;
+    padding: 30px;
+    min-height: 100vh;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 
-	&__img {
-		margin: 0 auto;
-		max-width: 35%;
+    &__img {
+        margin: 0 auto;
+        max-width: 35%;
 
-		img {
-			width: 100%;
-		}
-	}
+        img {
+            width: 100%;
+        }
+    }
 
-	&__content {
-		display: flex;
-		max-width: 50%;
-		align-items: center;
-		margin: 40px auto 0 auto;
-		flex-direction: column;
-		justify-content: center;
-	}
+    &__content {
+        display: flex;
+        max-width: 50%;
+        align-items: center;
+        margin: 40px auto 0 auto;
+        flex-direction: column;
+        justify-content: center;
+    }
 
-	&__title {
-		font-size: 28px;
-		text-align: center;
-		margin-bottom: 10px;
-	}
+    &__title {
+        font-size: 28px;
+        text-align: center;
+        margin-bottom: 10px;
+    }
 
-	&__subtitle {
-		color: gray;
-		font-size: 16px;
-		text-align: center;
-	}
+    &__subtitle {
+        color: gray;
+        font-size: 16px;
+        text-align: center;
+    }
 }
 
 @media (max-width: 991px) {
-	.not-found-page {
-		&__img {
-			max-width: 50%;
-		}
-	}
+    .not-found-page {
+        &__img {
+            max-width: 50%;
+        }
+    }
 }
 
 @media (max-width: 768px) {
-	.not-found-page {
-		&__img {
-			max-width: 70%;
-		}
+    .not-found-page {
+        &__img {
+            max-width: 70%;
+        }
 
-		&__content {
-			max-width: 100%;
-		}
-	}
+        &__content {
+            max-width: 100%;
+        }
+    }
 }
 
 @media (max-width: 575px) {
-	.not-found-page {
-		&__img {
-			max-width: 100%;
-		}
+    .not-found-page {
+        &__img {
+            max-width: 100%;
+        }
 
-		&__title {
-			font-size: 20px;
-		}
+        &__title {
+            font-size: 20px;
+        }
 
-		&__subtitle {
-			font-size: 14px;
-		}
-	}
+        &__subtitle {
+            font-size: 14px;
+        }
+    }
 }

@@ -1,4 +1,4 @@
-import type { ThemeConfig } from "antd"
+import type { ThemeConfig } from 'antd'
 
 export const themeConfiguration: ThemeConfig = {
     token: {
@@ -7,7 +7,6 @@ export const themeConfiguration: ThemeConfig = {
     },
 
     components: {
-
         Input: {
             activeBorderColor: 'rgba(0, 0, 0, 0.9)',
             activeShadow: '0 0 0 2px rgba(0, 0, 0, 0.5)'

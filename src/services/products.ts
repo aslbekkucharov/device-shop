@@ -4,7 +4,9 @@ import type { Product } from '@/types/product'
 import type { NewProductPayload, Primitive } from '@/types'
 
 export const productsApi = {
-    getProducts<T>(params?: Record<string, Primitive | object>): Promise<AxiosResponse<T>> {
+    getProducts<T>(
+        params?: Record<string, Primitive | object>
+    ): Promise<AxiosResponse<T>> {
         return $api.get('/products', { params })
     },
 
@@ -16,7 +18,10 @@ export const productsApi = {
         return $api.post('/products', body)
     },
 
-    updateProduct(id: string, payload: NewProductPayload): Promise<AxiosResponse<Product>> {
+    updateProduct(
+        id: string,
+        payload: NewProductPayload
+    ): Promise<AxiosResponse<Product>> {
         return $api.put(`/products/${id}`, payload)
     },
 

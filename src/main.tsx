@@ -10,9 +10,9 @@ import { store } from '@/store'
 import '@/assets/styles/index.scss'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <Provider store={store}>
-    <React.StrictMode>
-      <RouterProvider router={router} />
-    </React.StrictMode>
-  </Provider>
+    <Provider store={store}>
+        <React.StrictMode>
+            <RouterProvider router={router} />
+        </React.StrictMode>
+    </Provider>
 )

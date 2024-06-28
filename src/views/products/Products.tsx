@@ -1,7 +1,17 @@
 import { Link } from 'react-router-dom'
 import { QuestionCircleOutlined, SearchOutlined } from '@ant-design/icons'
 import { type SyntheticEvent, useEffect, useMemo, useState } from 'react'
-import { App, Button, Card, Empty, Input, Pagination, Popconfirm, Select, Space } from 'antd'
+import {
+    App,
+    Button,
+    Card,
+    Empty,
+    Input,
+    Pagination,
+    Popconfirm,
+    Select,
+    Space
+} from 'antd'
 
 import { debounce } from '@/utils'
 import type { PopconfirmProps } from 'antd'
@@ -12,7 +22,12 @@ import classes from '@/views/products/products.module.scss'
 import ProductCard from '@/components/product-card/ProductCard'
 import { useAppDispatch, useAppSelector } from '@/hooks/app-hooks'
 import type { PageableResponse, Pagination as PaginationType } from '@/types'
-import { setEditingProduct, setIsProductEditing, setProductModalVisibility, setProducts } from '@/store/global/store'
+import {
+    setEditingProduct,
+    setIsProductEditing,
+    setProductModalVisibility,
+    setProducts
+} from '@/store/global/store'
 
 interface Filter {
     category: string
@@ -20,18 +35,19 @@ interface Filter {
 }
 
 function ProductsContent(props: { products: Product[] }) {
-
     const { message } = App.useApp()
     const dispatch = useAppDispatch()
     const { isAuthenticated } = useAuth()
 
-    const productsList = isAuthenticated ? props.products : props.products.filter(p => p.status === 'published')
+    const productsList = isAuthenticated
+        ? props.products
+        : props.products.filter((p) => p.status === 'published')
 
     const popConfirmConfig: PopconfirmProps = {
         okText: 'Да',
-        title: "Удаление твара",
+        title: 'Удаление твара',
         onCancel: (e) => e?.preventDefault(),
-        description: "Вы уверены что хотите удалить товар?",
+        description: 'Вы уверены что хотите удалить товар?',
         icon: <QuestionCircleOutlined style={{ color: 'red' }} />
     }
 
@@ -42,12 +58,14 @@ function ProductsContent(props: { products: Product[] }) {
         dispatch(setProductModalVisibility(true))
     }
 
-    async function handleProductDelete(event: SyntheticEvent | undefined, id: string) {
+    async function handleProductDelete(
+        event: SyntheticEvent | undefined,
+        id: string
+    ) {
         event?.preventDefault()
         const messageKey = 'message_key'
 
         try {
-
             message.open({
                 duration: 1000,
                 key: messageKey,
@@ -55,7 +73,7 @@ function ProductsContent(props: { products: Product[] }) {
                 content: 'Удаляем продукт, подождите'
             })
 
-            await productsApi.deleteProduct(id).then(res => {
+            await productsApi.deleteProduct(id).then((res) => {
                 if (res.status >= 200 && res.status <= 300) {
                     message.open({
                         key: messageKey,
@@ -63,12 +81,15 @@ function ProductsContent(props: { products: Product[] }) {
                         content: 'Товар был успешно удален'
                     })
 
-                    productsApi.getProducts<PageableResponse<Product>>({ _page: 1, _per_page: 6 }).then((res) => {
-                        dispatch(setProducts(res.data.data))
-                    })
+                    productsApi
+                        .getProducts<
+                            PageableResponse<Product>
+                        >({ _page: 1, _per_page: 6 })
+                        .then((res) => {
+                            dispatch(setProducts(res.data.data))
+                        })
                 }
             })
-
         } catch (error) {
             message.open({
                 type: 'error',
@@ -85,16 +106,32 @@ function ProductsContent(props: { products: Product[] }) {
                 {productsList.map((product) => (
                     <Link to={`/product/${product.id}`} key={product.id}>
                         <ProductCard data={product}>
-                            {
-                                isAuthenticated ?
-                                    <>
-                                        <Popconfirm {...popConfirmConfig} onConfirm={(e) => handleProductDelete(e, product.id)}>
-                                            <Button block onClick={(e) => e.preventDefault()}>Удалить</Button>
-                                        </Popconfirm>
-                                        <Button type='primary' onClick={(e) => handleProductEdit(e, product)} block>Редактировать</Button>
-                                    </> :
-                                    null
-                            }
+                            {isAuthenticated ? (
+                                <>
+                                    <Popconfirm
+                                        {...popConfirmConfig}
+                                        onConfirm={(e) =>
+                                            handleProductDelete(e, product.id)
+                                        }
+                                    >
+                                        <Button
+                                            block
+                                            onClick={(e) => e.preventDefault()}
+                                        >
+                                            Удалить
+                                        </Button>
+                                    </Popconfirm>
+                                    <Button
+                                        type="primary"
+                                        onClick={(e) =>
+                                            handleProductEdit(e, product)
+                                        }
+                                        block
+                                    >
+                                        Редактировать
+                                    </Button>
+                                </>
+                            ) : null}
                         </ProductCard>
                     </Link>
                 ))}
@@ -110,12 +147,18 @@ function ProductsContent(props: { products: Product[] }) {
 }
 
 export default function Products() {
-
     const dispatch = useAppDispatch()
     const products = useAppSelector((state) => state.global.products)
     const categories = useAppSelector((state) => state.global.categories)
-    const [filter, setFilter] = useState<Filter>({ searchKey: '', category: '' })
-    const [pagination, setPagination] = useState<PaginationType>({ perPage: 6, total: 0, current: 1 })
+    const [filter, setFilter] = useState<Filter>({
+        searchKey: '',
+        category: ''
+    })
+    const [pagination, setPagination] = useState<PaginationType>({
+        perPage: 6,
+        total: 0,
+        current: 1
+    })
 
     const debouncedSearchInputChangeHandler = debounce(setFilter, 500)
 
@@ -128,13 +171,16 @@ export default function Products() {
     }
 
     function handleSearchInputChange(payload: string) {
-        debouncedSearchInputChangeHandler((prevVal) => ({ ...prevVal, searchKey: payload }))
+        debouncedSearchInputChangeHandler((prevVal) => ({
+            ...prevVal,
+            searchKey: payload
+        }))
     }
 
     const params = useMemo(() => {
         const result: Record<string, string | number | undefined> = {
             _page: pagination.current,
-            _per_page: pagination.perPage,
+            _per_page: pagination.perPage
         }
 
         if (filter.category) {
@@ -146,14 +192,18 @@ export default function Products() {
         }
 
         return result
-
     }, [filter])
 
     useEffect(() => {
-        productsApi.getProducts<PageableResponse<Product>>(params).then((res) => {
-            dispatch(setProducts(res.data.data))
-            setPagination((prevVal) => ({ ...prevVal, total: res.data.items }))
-        })
+        productsApi
+            .getProducts<PageableResponse<Product>>(params)
+            .then((res) => {
+                dispatch(setProducts(res.data.data))
+                setPagination((prevVal) => ({
+                    ...prevVal,
+                    total: res.data.items
+                }))
+            })
     }, [params])
 
     return (
@@ -161,16 +211,22 @@ export default function Products() {
             <div className={classes.products__head}>
                 <h3 className={classes.products__title}>Товары</h3>
 
-                <Space wrap align='start'>
+                <Space wrap align="start">
                     <Input
-                        size='large'
-                        placeholder='Искать товар'
-                        prefix={<SearchOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        onChange={(event) => handleSearchInputChange(event.target.value)}
+                        size="large"
+                        placeholder="Искать товар"
+                        prefix={
+                            <SearchOutlined
+                                style={{ color: 'rgba(0,0,0,.25)' }}
+                            />
+                        }
+                        onChange={(event) =>
+                            handleSearchInputChange(event.target.value)
+                        }
                     />
 
                     <Select
-                        size='large'
+                        size="large"
                         options={categories}
                         onChange={handleCategorySelect}
                         placeholder="Выберите категорию"
@@ -191,7 +247,6 @@ export default function Products() {
                     pageSize={pagination.perPage}
                 />
             </div>
-
         </div>
     )
 }

@@ -1,11 +1,14 @@
-import { Button } from "antd"
-import { Field, type FormRenderProps } from "react-final-form"
-import { LockOutlined, UserOutlined } from "@ant-design/icons"
+import { Button } from 'antd'
+import { Field, type FormRenderProps } from 'react-final-form'
+import { LockOutlined, UserOutlined } from '@ant-design/icons'
 
-import type { LoginPayload } from "@/types"
-import FormField from "@/components/form/form-field/FormField"
+import type { LoginPayload } from '@/types'
+import FormField from '@/components/form/form-field/FormField'
 
-export default function LoginForm({ handleSubmit, submitting }: FormRenderProps<LoginPayload>) {
+export default function LoginForm({
+    handleSubmit,
+    submitting
+}: FormRenderProps<LoginPayload>) {
     return (
         <form onSubmit={handleSubmit}>
             <Field name="username">
@@ -31,7 +34,15 @@ export default function LoginForm({ handleSubmit, submitting }: FormRenderProps<
                     />
                 )}
             </Field>
-            <Button block htmlType="submit" size="large" type="primary" disabled={submitting}>Войти</Button>
+            <Button
+                block
+                htmlType="submit"
+                size="large"
+                type="primary"
+                disabled={submitting}
+            >
+                Войти
+            </Button>
         </form>
     )
 }

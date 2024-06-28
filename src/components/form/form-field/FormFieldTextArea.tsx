@@ -11,7 +11,12 @@ type Props = {
     input: FieldInputProps<string, HTMLElement>
 }
 
-export default function FormFieldTextarea({ input, label, meta, textareaProps }: Props) {
+export default function FormFieldTextarea({
+    input,
+    label,
+    meta,
+    textareaProps
+}: Props) {
     return (
         <label className={classes['form-field']}>
             <span className={classes['form-field__label']}>{label}</span>
@@ -20,7 +25,11 @@ export default function FormFieldTextarea({ input, label, meta, textareaProps }:
                 {...textareaProps}
                 className={classes['form-field__input']}
             />
-            {meta.touched && meta.error && <span className={classes['form-field__input-error']}>{meta.error}</span>}
+            {meta.touched && meta.error && (
+                <span className={classes['form-field__input-error']}>
+                    {meta.error}
+                </span>
+            )}
         </label>
     )
 }

@@ -1,6 +1,6 @@
-import type { Product } from "@/types/product"
-import type { Category } from "@/types/category"
-import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import type { Product } from '@/types/product'
+import type { Category } from '@/types/category'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface GlobalStateType {
     products: Product[]
@@ -53,6 +53,12 @@ export const globalState = createSlice({
     }
 })
 
-export const { setCategories, setProducts, setProductModalVisibility, setEditingProduct, setIsProductEditing } = globalState.actions
+export const {
+    setCategories,
+    setProducts,
+    setProductModalVisibility,
+    setEditingProduct,
+    setIsProductEditing
+} = globalState.actions
 
 export default globalState.reducer

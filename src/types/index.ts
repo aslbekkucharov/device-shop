@@ -1,5 +1,5 @@
 import { Dayjs } from 'dayjs'
-import { ProductStatuses } from "./product"
+import { ProductStatuses } from './product'
 
 export type Primitive = boolean | number | string | symbol | null | undefined
 
@@ -69,7 +69,7 @@ export interface UploadResponseType {
         thumb: UploadFiltType
         medium: UploadFiltType
         delete_url: string
-    },
+    }
     success: boolean
     status: number
 }

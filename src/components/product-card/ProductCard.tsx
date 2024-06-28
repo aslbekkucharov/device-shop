@@ -14,13 +14,24 @@ export default function ProductCard(props: Props) {
         <span className={classes['product-card']}>
             <span className={classes['product-card__head']}>
                 <span className={classes['product-card__head-col']}>
-                    <span className={classes['product-card__title']}>{props.data.name}</span>
-                    <span className={classes['product-card__price']}>{formatPrice(props.data.price)}</span>
+                    <span className={classes['product-card__title']}>
+                        {props.data.name}
+                    </span>
+                    <span className={classes['product-card__price']}>
+                        {formatPrice(props.data.price)}
+                    </span>
                 </span>
-                <Image width={130} preview={false} src={props.data.image} className={classes['product-card__img']} />
+                <Image
+                    width={130}
+                    preview={false}
+                    src={props.data.image}
+                    className={classes['product-card__img']}
+                />
             </span>
             <span className={classes['product-card__content']}>
-                <span className={classes['product-card__excerpt']}>{props.data.description}</span>
+                <span className={classes['product-card__excerpt']}>
+                    {props.data.description}
+                </span>
             </span>
             <span className={classes['product-card__footer']}>
                 {props.children}

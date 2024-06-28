@@ -4,7 +4,9 @@ export default function Footer() {
     return (
         <footer className={classes.footer}>
             <div className="container">
-                <span className={classes.footer__text}>© Aslbek Kucharov. Все права защищены!</span>
+                <span className={classes.footer__text}>
+                    © Aslbek Kucharov. Все права защищены!
+                </span>
             </div>
         </footer>
     )

@@ -1,4 +1,4 @@
-import { Card, Empty } from "antd"
+import { Card, Empty } from 'antd'
 
 export default function EmptyResult() {
     return (

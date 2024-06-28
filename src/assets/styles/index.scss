@@ -1,75 +1,75 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 * {
-	margin: 0;
-	padding: 0;
-	text-decoration: none;
-	list-style-type: none;
-	box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style-type: none;
+    box-sizing: border-box;
 }
 
 html,
 body,
 #root,
 .ant-app {
-	min-height: 100vh;
+    min-height: 100vh;
 }
 
 body {
-	background-color: #f1f5f9;
-	font-family: 'Open Sans', sans-serif;
+    background-color: #f1f5f9;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .ant-app {
-	display: flex;
-	flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 header {
-	flex: 0 0 auto;
+    flex: 0 0 auto;
 }
 
 main {
-	flex: 1 0 auto;
-	margin: 20px 0px;
+    flex: 1 0 auto;
+    margin: 20px 0px;
 }
 
 footer {
-	flex: 0 0 auto;
+    flex: 0 0 auto;
 }
 
 .container {
-	width: 100%;
-	margin: 0 auto;
-	max-width: 1200px;
-	padding: 0px 15px;
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 0px 15px;
 }
 
 .logo {
-	font-size: 20px;
-	color: #000000;
-	font-weight: 800;
-	text-transform: uppercase;
+    font-size: 20px;
+    color: #000000;
+    font-weight: 800;
+    text-transform: uppercase;
 }
 
 .products-list {
-	display: grid;
-	gap: 15px;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .text-gray {
-	color: gray;
+    color: gray;
 }
 
 @media (max-width: 991px) {
-	.products-list {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-	}
+    .products-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 @media (max-width: 768px) {
-	.products-list {
-		grid-template-columns: repeat(1, minmax(0, 1fr));
-	}
+    .products-list {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
 }

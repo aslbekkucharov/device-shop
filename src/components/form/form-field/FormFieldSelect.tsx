@@ -10,7 +10,12 @@ type Props = {
     input: FieldInputProps<string, HTMLElement>
 }
 
-export default function FormFieldSelect({ input, label, meta, selectProps }: Props) {
+export default function FormFieldSelect({
+    input,
+    label,
+    meta,
+    selectProps
+}: Props) {
     return (
         <label className={classes['form-field']}>
             <span className={classes['form-field__label']}>{label}</span>
@@ -20,7 +25,11 @@ export default function FormFieldSelect({ input, label, meta, selectProps }: Pro
                 {...selectProps}
                 className={classes['form-field__input']}
             />
-            {meta.touched && meta.error && <span className={classes['form-field__input-error']}>{meta.error}</span>}
+            {meta.touched && meta.error && (
+                <span className={classes['form-field__input-error']}>
+                    {meta.error}
+                </span>
+            )}
         </label>
     )
 }
