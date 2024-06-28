@@ -7,6 +7,12 @@
         margin-bottom: 30px;
     }
 
+    &__space {
+        gap: 10px;
+        display: flex;
+        align-items: center;
+    }
+
     &__title {
         font-size: 18px;
         font-weight: 600;
@@ -25,6 +31,12 @@
 
 @media (max-width: 575px) {
     .products {
+
+        &__space {
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
         &__head {
             flex-wrap: wrap;
 

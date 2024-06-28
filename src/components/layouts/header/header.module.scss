@@ -7,6 +7,12 @@
         align-items: center;
         justify-content: space-between;
     }
+
+    &__space {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 }
 
 

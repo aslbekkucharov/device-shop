@@ -172,7 +172,7 @@ export default function Products() {
             <div className={classes.products__head}>
                 <h3 className={classes.products__title}>Товары</h3>
 
-                <Space wrap align="start">
+                <div className={classes.products__space}>
                     <Input size="large" placeholder="Искать товар" prefix={<SearchOutlined style={{ color: 'rgba(0,0,0,.25)' }} />} onChange={(event) => handleSearchInputChange(event.target.value)} />
                     <Select
                         size="large"
@@ -182,7 +182,7 @@ export default function Products() {
                         notFoundContent="Ничего не найдено"
                         className={classes.products__select}
                     />
-                </Space>
+                </div>
             </div>
 
             <ProductsContent products={products} />

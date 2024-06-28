@@ -37,7 +37,7 @@ export default function Header() {
                         Войти
                     </Button>
                 ) : (
-                    <Space>
+                    <div className={classes.header__space}>
                         <Button onClick={handleAddProduct} type="primary" size="large" iconPosition="end" icon={<PlusCircleOutlined />}>
                             Добавить товар
                         </Button>
@@ -46,7 +46,7 @@ export default function Header() {
                             {' '}
                             Выйти
                         </Button>
-                    </Space>
+                    </div>
                 )}
             </div>
         </header>
