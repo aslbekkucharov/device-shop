@@ -111,7 +111,17 @@ export default function AddProductModal({ isOpen }: Props) {
         if (!isOpen) {
             resetFormOnModalClose()
             dispatch(setIsProductEditing(false))
-            dispatch(setEditingProduct({} as Product))
+            dispatch(setEditingProduct({
+                id: '',
+                name: '',
+                price: 0,
+                image: '',
+                category: '',
+                createdAt: '',
+                releaseDate: '',
+                description: '',
+                status: 'published'
+            }))
         }
 
     }, [isOpen, isProductEditing])

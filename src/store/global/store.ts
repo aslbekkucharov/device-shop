@@ -15,7 +15,16 @@ const initialState: GlobalStateType = {
     categories: [],
     isProductEditing: false,
     isProductModalVisible: false,
-    editingProduct: {} as Product
+    editingProduct: {
+        id: '',
+        name: '',
+        price: 0,
+        category: '',
+        createdAt: '',
+        description: '',
+        releaseDate: '',
+        status: 'published'
+    }
 }
 
 export const globalState = createSlice({
