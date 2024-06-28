@@ -1,7 +1,7 @@
 import { clsx } from 'clsx'
-import { Button } from 'antd'
+import { Button, Space } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
-import { LoginOutlined, PlusCircleOutlined } from '@ant-design/icons'
+import { LoginOutlined, LogoutOutlined, PlusCircleOutlined } from '@ant-design/icons'
 
 import { useAuth } from '@/hooks/useAuth'
 import { useAppDispatch } from '@/hooks/app-hooks'
@@ -12,7 +12,7 @@ export default function Header() {
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const { isAuthenticated } = useAuth()
+    const { isAuthenticated, logout } = useAuth()
 
     function handleLogin() {
         navigate('/login')
@@ -20,6 +20,10 @@ export default function Header() {
 
     function handleAddProduct() {
         dispatch(setProductModalVisibility(true))
+    }
+
+    function handleLogout() {
+        logout()
     }
 
     return (
@@ -31,7 +35,10 @@ export default function Header() {
                         ?
                         <Button onClick={handleLogin} size="large" iconPosition='end' icon={<LoginOutlined />}>Войти</Button>
                         :
-                        <Button onClick={handleAddProduct} size="large" iconPosition='end' icon={<PlusCircleOutlined />}>Добавить товар</Button>
+                        <Space>
+                            <Button onClick={handleAddProduct} type='primary' size="large" iconPosition='end' icon={<PlusCircleOutlined />}>Добавить товар</Button>
+                            <Button onClick={handleLogout} size="large" iconPosition='end' icon={<LogoutOutlined />}> Выйти</Button>
+                        </Space>
                 }
             </div>
         </header >

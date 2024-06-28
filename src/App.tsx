@@ -1,6 +1,6 @@
 import ruRu from 'antd/locale/ru_RU'
-import { ConfigProvider } from "antd"
 import { Provider } from 'react-redux'
+import { ConfigProvider } from "antd"
 
 import Modals from "@/components/Modals"
 import Main from "@/components/layouts/Main"

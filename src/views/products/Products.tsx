@@ -1,17 +1,19 @@
 import { Link } from 'react-router-dom'
-import { SearchOutlined } from '@ant-design/icons'
-import { SyntheticEvent, useEffect, useMemo, useState } from 'react'
-import { Button, Card, Empty, Input, Pagination, Select, Space } from 'antd'
+import { QuestionCircleOutlined, SearchOutlined } from '@ant-design/icons'
+import { type SyntheticEvent, useEffect, useMemo, useState } from 'react'
+import { Button, Card, Empty, Input, Pagination, Popconfirm, Select, Space, message } from 'antd'
 
 import { debounce } from '@/utils'
+import type { PopconfirmProps } from 'antd'
+import { useAuth } from '@/hooks/useAuth'
 import type { Product } from '@/types/product'
 import { productsApi } from '@/services/products'
 import { categoryApi } from '@/services/category'
 import classes from '@/views/products/products.module.scss'
 import ProductCard from '@/components/product-card/ProductCard'
-import { setCategories, setEditingProduct, setIsProductEditing, setProductModalVisibility, setProducts } from '@/store/global/store'
 import { useAppDispatch, useAppSelector } from '@/hooks/app-hooks'
-import { PageableResponse, Pagination as PaginationType } from '@/types'
+import type { PageableResponse, Pagination as PaginationType } from '@/types'
+import { setCategories, setEditingProduct, setIsProductEditing, setProductModalVisibility, setProducts } from '@/store/global/store'
 
 interface Filter {
     category: string
@@ -21,8 +23,18 @@ interface Filter {
 function ProductsContent(props: { products: Product[] }) {
 
     const dispatch = useAppDispatch()
+    const { isAuthenticated } = useAuth()
+    const [messageApi, contextHolder] = message.useMessage()
 
-    const publishedProducts = props.products.filter(p => p.status === 'published')
+    const productsList = isAuthenticated ? props.products : props.products.filter(p => p.status === 'published')
+
+    const popConfirmConfig: PopconfirmProps = {
+        okText: 'Да',
+        title: "Удаление твара",
+        onCancel: (e) => e?.preventDefault(),
+        description: "Вы уверены что хотите удалить товар?",
+        icon: <QuestionCircleOutlined style={{ color: 'red' }} />
+    }
 
     function handleProductEdit(event: SyntheticEvent, product: Product) {
         event.preventDefault()
@@ -31,28 +43,60 @@ function ProductsContent(props: { products: Product[] }) {
         dispatch(setProductModalVisibility(true))
     }
 
-    async function handleProductDelete(event: SyntheticEvent, id: string) {
-        event.preventDefault()
-        await productsApi.deleteProduct(id)
-        productsApi.getProducts<PageableResponse<Product>>({ _page: 1, _per_page: 6 }).then((res) => {
-            dispatch(setProducts(res.data.data))
-        })
+    async function handleProductDelete(event: SyntheticEvent | undefined, id: string) {
+        event?.preventDefault()
+        const messageKey = 'message_key'
+
+        try {
+
+            messageApi.open({
+                duration: 1000,
+                key: messageKey,
+                type: 'loading',
+                content: 'Удаляем продукт, подождите'
+            })
+
+            await productsApi.deleteProduct(id).then(res => {
+                if (res.status >= 200 && res.status <= 300) {
+                    messageApi.open({
+                        key: messageKey,
+                        type: 'success',
+                        content: 'Товар был успешно удален'
+                    })
+
+                    productsApi.getProducts<PageableResponse<Product>>({ _page: 1, _per_page: 6 }).then((res) => {
+                        dispatch(setProducts(res.data.data))
+                    })
+                }
+            })
+
+        } catch (error) {
+            messageApi.open({
+                type: 'error',
+                duration: 1000,
+                key: messageKey,
+                content: 'Что-то пошло не так при удалении товара'
+            })
+        }
     }
 
     if (props.products?.length) {
         return (
             <div className="products-list">
-                {publishedProducts.map((product) => (
+                {contextHolder}
+                {productsList.map((product) => (
                     <Link to={`/product/${product.id}`} key={product.id}>
                         <ProductCard data={product}>
-                            <>
-                                <Button onClick={(e) => handleProductDelete(e, product.id)} block>
-                                    Удалить
-                                </Button>
-                                <Button type='primary' onClick={(e) => handleProductEdit(e, product)} block>
-                                    Редактировать
-                                </Button>
-                            </>
+                            {
+                                isAuthenticated ?
+                                    <>
+                                        <Popconfirm {...popConfirmConfig} onConfirm={(e) => handleProductDelete(e, product.id)}>
+                                            <Button block onClick={(e) => e.preventDefault()}>Удалить</Button>
+                                        </Popconfirm>
+                                        <Button type='primary' onClick={(e) => handleProductEdit(e, product)} block>Редактировать</Button>
+                                    </> :
+                                    null
+                            }
                         </ProductCard>
                     </Link>
                 ))}

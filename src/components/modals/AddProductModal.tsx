@@ -63,10 +63,15 @@ export default function AddProductModal({ isOpen }: Props) {
     }
 
     async function handleFormSubmit(payload: NewProductPayload) {
-        try {
-            const messageKey = 'updatable'
+        const loadingMessageContent = isProductEditing ? 'Подождите, ваш товар сохраняется...' : 'Подождите, ваш товар создается...'
+        const errorMessageContent = isProductEditing ? 'Возникла непредвиденная ошибка при сохранении товара' : 'Возникла непредвиденная ошибка при создании товара'
 
-            messageApi.open({ key: messageKey, type: 'loading', content: 'Подождите, ваш товар создается...' })
+        try {
+
+            const method = isProductEditing ? 'put' : 'post'
+            const endpoint = isProductEditing ? `/products/${editingProduct.id}` : '/products'
+
+            messageApi.loading(loadingMessageContent, 1000)
 
             const body = {
                 ...payload,
@@ -75,26 +80,23 @@ export default function AddProductModal({ isOpen }: Props) {
                 price: +payload.price
             }
 
-            const response = await $api.post('/products', body)
+            const response = await $api[method](endpoint, body)
 
-            if (response.status === 201) {
+            if (response.status >= 200 && response.status <= 300) {
                 productsApi.getProducts<PageableResponse<Product>>({ _page: 1, _per_page: 6 }).then(res => {
-                    messageApi.open({ key: messageKey, type: 'success', content: 'Товар успешно создан!' })
                     dispatch(setProducts(res.data.data))
-                    resetFormOnModalClose()
                     dispatch(setProductModalVisibility(false))
                 })
             }
 
         } catch (error) {
-            messageApi.success('Что-то пошло не так при создании товара')
+            messageApi.error(errorMessageContent, 1000)
         }
     }
 
     useEffect(() => {
 
         if (isOpen && isProductEditing) {
-            console.log(editingProduct)
             setInitialValues((prevVal) => ({
                 ...prevVal,
                 ...editingProduct,
@@ -103,11 +105,12 @@ export default function AddProductModal({ isOpen }: Props) {
         }
 
         if (!isOpen) {
+            resetFormOnModalClose()
             dispatch(setIsProductEditing(false))
             dispatch(setEditingProduct({} as Product))
         }
 
-    }, [isOpen])
+    }, [isOpen, isProductEditing])
 
     return (
         <Modal {...config}>

@@ -1,12 +1,11 @@
 import type { Product } from "@/types/product"
 import type { Category } from "@/types/category"
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
-import { NewProductPayload } from "@/types"
 
 interface GlobalStateType {
     products: Product[]
     categories: Category[]
-    editingProduct: NewProductPayload
+    editingProduct: Product
     isProductEditing: boolean
     isProductModalVisible: boolean
 }
@@ -16,7 +15,7 @@ const initialState: GlobalStateType = {
     categories: [],
     isProductEditing: false,
     isProductModalVisible: false,
-    editingProduct: {} as NewProductPayload
+    editingProduct: {} as Product
 }
 
 export const globalState = createSlice({
@@ -27,7 +26,7 @@ export const globalState = createSlice({
             state.products = action.payload
         },
 
-        setEditingProduct(state, action: PayloadAction<NewProductPayload>) {
+        setEditingProduct(state, action: PayloadAction<Product>) {
             state.editingProduct = action.payload
         },
 

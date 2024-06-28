@@ -11,6 +11,6 @@ export const productSchema = object({
     status: string().required('Укажите статус продукта'),
     category: string().required('Выберите категорию товара'),
     description: string().required('Введите описание товара'),
-    price: number().required('Введите рекомендуемую цену товара'),
+    price: number().min(1, 'Цена товара должна быть больше 0').required('Введите рекомендуемую цену товара'),
     releaseDate: string().required('Укажите дату релиза продукта')
 })
