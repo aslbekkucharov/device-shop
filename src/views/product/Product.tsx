@@ -27,11 +27,9 @@ export default function Product() {
     }, [product])
 
     useEffect(() => {
-        $api.get(`/products/${id}`).then(
-            (response: AxiosResponse<ProductType>) => {
-                setProduct(() => response.data)
-            }
-        )
+        $api.get(`/products/${id}`).then((response: AxiosResponse<ProductType>) => {
+            setProduct(() => response.data)
+        })
     }, [id])
 
     return product ? (
@@ -45,46 +43,33 @@ export default function Product() {
             <h2 className={classes['product-page__title']}>{product.name}</h2>
 
             <div className={classes['product-page-info']}>
-                <span className={classes['product-page-info__label']}>
-                    Дата релиза:{' '}
-                </span>
-                <p className={classes['product-page__description']}>
-                    {formatDate(product.releaseDate)}
-                </p>
+                <span className={classes['product-page-info__label']}>Дата релиза: </span>
+
+                <p className={classes['product-page__description']}>{formatDate(product.releaseDate)}</p>
             </div>
 
             <div className={classes['product-page-info']}>
-                <span className={classes['product-page-info__label']}>
-                    Дата создания:{' '}
-                </span>
-                <p className={classes['product-page__description']}>
-                    {formatDate(product.createdAt)}
-                </p>
+                <span className={classes['product-page-info__label']}>Дата создания: </span>
+
+                <p className={classes['product-page__description']}>{formatDate(product.createdAt)}</p>
             </div>
 
             <div className={classes['product-page-info']}>
-                <span className={classes['product-page-info__label']}>
-                    Цена товара:{' '}
-                </span>
-                <p className={classes['product-page__description']}>
-                    {formatPrice(product.price)}
-                </p>
+                <span className={classes['product-page-info__label']}>Цена товара: </span>
+
+                <p className={classes['product-page__description']}>{formatPrice(product.price)}</p>
             </div>
 
             <div className={classes['product-page-info']}>
-                <span className={classes['product-page-info__label']}>
-                    Статус товара:{' '}
-                </span>
+                <span className={classes['product-page-info__label']}>Статус товара: </span>
+
                 <p className={classes['product-page__description']}>{status}</p>
             </div>
 
             <div className={classes['product-page-info']}>
-                <span className={classes['product-page-info__label']}>
-                    Описание товара:{' '}
-                </span>
-                <p className={classes['product-page__description']}>
-                    {product.description}
-                </p>
+                <span className={classes['product-page-info__label']}>Описание товара: </span>
+
+                <p className={classes['product-page__description']}>{product.description}</p>
             </div>
         </div>
     ) : (

@@ -10,28 +10,13 @@ import FormFieldUploader from '@/components/form/form-field/FormFieldUploader'
 import FormFieldTextarea from '@/components/form/form-field/FormFieldTextArea'
 import FormFieldDatepicker from '@/components/form/form-field/FormFieldDatepicker'
 
-export default function AddProductForm({
-    handleSubmit,
-    submitting,
-    hasValidationErrors
-}: FormRenderProps<NewProductPayload>) {
+export default function AddProductForm({ handleSubmit, submitting, hasValidationErrors }: FormRenderProps<NewProductPayload>) {
     const categories = useAppSelector((state) => state.global.categories)
-    const isEditingProduct = useAppSelector(
-        (state) => state.global.isProductEditing
-    )
+    const isEditingProduct = useAppSelector((state) => state.global.isProductEditing)
 
     return (
         <form onSubmit={handleSubmit}>
-            <Field name="name">
-                {({ input, meta }) => (
-                    <FormField
-                        meta={meta}
-                        input={input}
-                        label="Название товара"
-                        placeholder="Введите название товара"
-                    />
-                )}
-            </Field>
+            <Field name="name">{({ input, meta }) => <FormField meta={meta} input={input} label="Название товара" placeholder="Введите название товара" />}</Field>
 
             <Field name="description">
                 {({ input, meta }) => (
@@ -64,17 +49,7 @@ export default function AddProductForm({
                 )}
             </Field>
 
-            <Field name="price">
-                {({ input, meta }) => (
-                    <FormField
-                        meta={meta}
-                        input={input}
-                        inputType="tel"
-                        label="Цена товара"
-                        placeholder="Введите цену"
-                    />
-                )}
-            </Field>
+            <Field name="price">{({ input, meta }) => <FormField meta={meta} input={input} inputType="tel" label="Цена товара" placeholder="Введите цену" />}</Field>
 
             <Field name="status">
                 {({ input, meta }) => (
@@ -91,16 +66,7 @@ export default function AddProductForm({
                 )}
             </Field>
 
-            <Field name="releaseDate">
-                {({ input, meta }) => (
-                    <FormFieldDatepicker
-                        meta={meta}
-                        input={input}
-                        label="Дата релиза"
-                        datePickerProps={{ placeholder: 'Укажите дату релиза' }}
-                    />
-                )}
-            </Field>
+            <Field name="releaseDate">{({ input, meta }) => <FormFieldDatepicker meta={meta} input={input} label="Дата релиза" datePickerProps={{ placeholder: 'Укажите дату релиза' }} />}</Field>
 
             <Field name="image">
                 {({ input, meta }) => (
@@ -111,22 +77,13 @@ export default function AddProductForm({
                         uploadProps={{
                             maxCount: 1,
                             accept: '.jpg,.png,.jpeg',
-                            action:
-                                import.meta.env.VITE_UPLOADER_BASE_API_URL +
-                                '/upload?key=' +
-                                import.meta.env.VITE_UPLOADER_API_TOKEN
+                            action: import.meta.env.VITE_UPLOADER_BASE_API_URL + '/upload?key=' + import.meta.env.VITE_UPLOADER_API_TOKEN
                         }}
                     />
                 )}
             </Field>
 
-            <Button
-                block
-                htmlType="submit"
-                size="large"
-                type="primary"
-                disabled={submitting || hasValidationErrors}
-            >
+            <Button block htmlType="submit" size="large" type="primary" disabled={submitting || hasValidationErrors}>
                 {isEditingProduct ? 'Сохранить изменения' : 'Добавить товар'}
             </Button>
         </form>

@@ -16,10 +16,7 @@ export const AuthContext = createContext<AuthContextType>({
 
 export function AuthProvider({ children }: PropsWithChildren) {
     const navigate = useNavigate()
-    const [isAuthenticated, setIsAuthenticated] = useLocalStorage(
-        'isLogged',
-        false
-    )
+    const [isAuthenticated, setIsAuthenticated] = useLocalStorage('isLogged', false)
 
     const login = useCallback(() => {
         setIsAuthenticated(true)
@@ -40,7 +37,5 @@ export function AuthProvider({ children }: PropsWithChildren) {
         [isAuthenticated, login, logout]
     )
 
-    return (
-        <AuthContext.Provider value={value}> {children} </AuthContext.Provider>
-    )
+    return <AuthContext.Provider value={value}> {children} </AuthContext.Provider>
 }

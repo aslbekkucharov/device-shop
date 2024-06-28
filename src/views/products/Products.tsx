@@ -1,17 +1,7 @@
 import { Link } from 'react-router-dom'
 import { QuestionCircleOutlined, SearchOutlined } from '@ant-design/icons'
 import { type SyntheticEvent, useEffect, useMemo, useState } from 'react'
-import {
-    App,
-    Button,
-    Card,
-    Empty,
-    Input,
-    Pagination,
-    Popconfirm,
-    Select,
-    Space
-} from 'antd'
+import { App, Button, Card, Empty, Input, Pagination, Popconfirm, Select, Space } from 'antd'
 
 import { debounce } from '@/utils'
 import type { PopconfirmProps } from 'antd'
@@ -22,12 +12,7 @@ import classes from '@/views/products/products.module.scss'
 import ProductCard from '@/components/product-card/ProductCard'
 import { useAppDispatch, useAppSelector } from '@/hooks/app-hooks'
 import type { PageableResponse, Pagination as PaginationType } from '@/types'
-import {
-    setEditingProduct,
-    setIsProductEditing,
-    setProductModalVisibility,
-    setProducts
-} from '@/store/global/store'
+import { setEditingProduct, setIsProductEditing, setProductModalVisibility, setProducts } from '@/store/global/store'
 
 interface Filter {
     category: string
@@ -39,9 +24,7 @@ function ProductsContent(props: { products: Product[] }) {
     const dispatch = useAppDispatch()
     const { isAuthenticated } = useAuth()
 
-    const productsList = isAuthenticated
-        ? props.products
-        : props.products.filter((p) => p.status === 'published')
+    const productsList = isAuthenticated ? props.products : props.products.filter((p) => p.status === 'published')
 
     const popConfirmConfig: PopconfirmProps = {
         okText: 'Да',
@@ -58,10 +41,7 @@ function ProductsContent(props: { products: Product[] }) {
         dispatch(setProductModalVisibility(true))
     }
 
-    async function handleProductDelete(
-        event: SyntheticEvent | undefined,
-        id: string
-    ) {
+    async function handleProductDelete(event: SyntheticEvent | undefined, id: string) {
         event?.preventDefault()
         const messageKey = 'message_key'
 
@@ -81,13 +61,9 @@ function ProductsContent(props: { products: Product[] }) {
                         content: 'Товар был успешно удален'
                     })
 
-                    productsApi
-                        .getProducts<
-                            PageableResponse<Product>
-                        >({ _page: 1, _per_page: 6 })
-                        .then((res) => {
-                            dispatch(setProducts(res.data.data))
-                        })
+                    productsApi.getProducts<PageableResponse<Product>>({ _page: 1, _per_page: 6 }).then((res) => {
+                        dispatch(setProducts(res.data.data))
+                    })
                 }
             })
         } catch (error) {
@@ -108,26 +84,13 @@ function ProductsContent(props: { products: Product[] }) {
                         <ProductCard data={product}>
                             {isAuthenticated ? (
                                 <>
-                                    <Popconfirm
-                                        {...popConfirmConfig}
-                                        onConfirm={(e) =>
-                                            handleProductDelete(e, product.id)
-                                        }
-                                    >
-                                        <Button
-                                            block
-                                            onClick={(e) => e.preventDefault()}
-                                        >
+                                    <Popconfirm {...popConfirmConfig} onConfirm={(e) => handleProductDelete(e, product.id)}>
+                                        <Button block onClick={(e) => e.preventDefault()}>
                                             Удалить
                                         </Button>
                                     </Popconfirm>
-                                    <Button
-                                        type="primary"
-                                        onClick={(e) =>
-                                            handleProductEdit(e, product)
-                                        }
-                                        block
-                                    >
+
+                                    <Button type="primary" onClick={(e) => handleProductEdit(e, product)} block>
                                         Редактировать
                                     </Button>
                                 </>
@@ -195,15 +158,13 @@ export default function Products() {
     }, [filter])
 
     useEffect(() => {
-        productsApi
-            .getProducts<PageableResponse<Product>>(params)
-            .then((res) => {
-                dispatch(setProducts(res.data.data))
-                setPagination((prevVal) => ({
-                    ...prevVal,
-                    total: res.data.items
-                }))
-            })
+        productsApi.getProducts<PageableResponse<Product>>(params).then((res) => {
+            dispatch(setProducts(res.data.data))
+            setPagination((prevVal) => ({
+                ...prevVal,
+                total: res.data.items
+            }))
+        })
     }, [params])
 
     return (
@@ -212,18 +173,7 @@ export default function Products() {
                 <h3 className={classes.products__title}>Товары</h3>
 
                 <Space wrap align="start">
-                    <Input
-                        size="large"
-                        placeholder="Искать товар"
-                        prefix={
-                            <SearchOutlined
-                                style={{ color: 'rgba(0,0,0,.25)' }}
-                            />
-                        }
-                        onChange={(event) =>
-                            handleSearchInputChange(event.target.value)
-                        }
-                    />
+                    <Input size="large" placeholder="Искать товар" prefix={<SearchOutlined style={{ color: 'rgba(0,0,0,.25)' }} />} onChange={(event) => handleSearchInputChange(event.target.value)} />
 
                     <Select
                         size="large"
@@ -239,13 +189,7 @@ export default function Products() {
             <ProductsContent products={products} />
 
             <div className={classes.products__pagination}>
-                <Pagination
-                    hideOnSinglePage={true}
-                    total={pagination.total}
-                    onChange={handlePageChange}
-                    current={pagination.current}
-                    pageSize={pagination.perPage}
-                />
+                <Pagination hideOnSinglePage={true} total={pagination.total} onChange={handlePageChange} current={pagination.current} pageSize={pagination.perPage} />
             </div>
         </div>
     )

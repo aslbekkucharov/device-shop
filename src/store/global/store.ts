@@ -53,12 +53,6 @@ export const globalState = createSlice({
     }
 })
 
-export const {
-    setCategories,
-    setProducts,
-    setProductModalVisibility,
-    setEditingProduct,
-    setIsProductEditing
-} = globalState.actions
+export const { setCategories, setProducts, setProductModalVisibility, setEditingProduct, setIsProductEditing } = globalState.actions
 
 export default globalState.reducer

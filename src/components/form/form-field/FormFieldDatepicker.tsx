@@ -10,26 +10,14 @@ type Props = {
     input: FieldInputProps<Dayjs | null | undefined, HTMLElement>
 }
 
-export default function FormFieldDatepicker({
-    input,
-    label,
-    meta,
-    datePickerProps
-}: Props) {
+export default function FormFieldDatepicker({ input, label, meta, datePickerProps }: Props) {
     return (
         <label className={classes['form-field']}>
             <span className={classes['form-field__label']}>{label}</span>
-            <DatePicker
-                {...input}
-                size="large"
-                {...datePickerProps}
-                className={classes['form-field__input']}
-            />
-            {meta.touched && meta.error && (
-                <span className={classes['form-field__input-error']}>
-                    {meta.error}
-                </span>
-            )}
+
+            <DatePicker {...input} size="large" {...datePickerProps} className={classes['form-field__input']} />
+
+            {meta.touched && meta.error && <span className={classes['form-field__input-error']}>{meta.error}</span>}
         </label>
     )
 }

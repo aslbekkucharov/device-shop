@@ -13,30 +13,14 @@ type Props = {
     input: FieldInputProps<string, HTMLElement>
 }
 
-export default function FormField({
-    input,
-    placeholder,
-    label,
-    meta,
-    inputPrefix,
-    inputType = 'text'
-}: Props) {
+export default function FormField({ input, placeholder, label, meta, inputPrefix, inputType = 'text' }: Props) {
     return (
         <label className={classes['form-field']}>
             <span className={classes['form-field__label']}>{label}</span>
-            <Input
-                {...input}
-                size="large"
-                type={inputType}
-                prefix={inputPrefix}
-                placeholder={placeholder}
-                className={classes['form-field__input']}
-            />
-            {meta.touched && meta.error && (
-                <span className={classes['form-field__input-error']}>
-                    {meta.error}
-                </span>
-            )}
+
+            <Input {...input} size="large" type={inputType} prefix={inputPrefix} placeholder={placeholder} className={classes['form-field__input']} />
+
+            {meta.touched && meta.error && <span className={classes['form-field__input-error']}>{meta.error}</span>}
         </label>
     )
 }

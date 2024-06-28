@@ -18,10 +18,7 @@ export default function Login() {
     const [initialValues, setInitialValues] = useState<LoginPayload>()
 
     function handleLoginFormSubmit(payload: LoginPayload) {
-        if (
-            authorizedUser.username === payload.username &&
-            authorizedUser.password === payload.password
-        ) {
+        if (authorizedUser.username === payload.username && authorizedUser.password === payload.password) {
             login()
             localStorage.setItem('isLogged', 'true') // for some reason "token" name is crashing json-server
         }
@@ -56,32 +53,15 @@ export default function Login() {
         <div className={classes['login-page']}>
             <div className={classes['login-form']}>
                 <div className={classes['login-form__head']}>
-                    <h2 className={classes['login-form__title']}>
-                        Вход в кабинет
-                    </h2>
-                    <p className={classes['login-form__subtitle']}>
-                        Войдите в свою учетную запись чтобы редактировать или
-                        добавлять товары.
-                    </p>
+                    <h2 className={classes['login-form__title']}>Вход в кабинет</h2>
+
+                    <p className={classes['login-form__subtitle']}>Войдите в свою учетную запись чтобы редактировать или добавлять товары.</p>
                 </div>
 
-                <Form
-                    initialValues={initialValues}
-                    validate={handleFormValidate}
-                    onSubmit={handleLoginFormSubmit}
-                    render={(props: FormRenderProps<LoginPayload>) => (
-                        <LoginForm {...props} />
-                    )}
-                />
+                <Form initialValues={initialValues} validate={handleFormValidate} onSubmit={handleLoginFormSubmit} render={(props: FormRenderProps<LoginPayload>) => <LoginForm {...props} />} />
 
                 <div className={classes['login-form__footer']}>
-                    <Button
-                        onClick={handleAutoFill}
-                        type="text"
-                        size="small"
-                        icon={<CheckCircleOutlined />}
-                        iconPosition="end"
-                    >
+                    <Button onClick={handleAutoFill} type="text" size="small" icon={<CheckCircleOutlined />} iconPosition="end">
                         Заполнить автоматически
                     </Button>
                 </div>

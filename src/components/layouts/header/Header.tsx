@@ -1,11 +1,7 @@
 import { clsx } from 'clsx'
 import { Button, Space } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
-import {
-    LoginOutlined,
-    LogoutOutlined,
-    PlusCircleOutlined
-} from '@ant-design/icons'
+import { LoginOutlined, LogoutOutlined, PlusCircleOutlined } from '@ant-design/icons'
 
 import { useAuth } from '@/hooks/useAuth'
 import { useAppDispatch } from '@/hooks/app-hooks'
@@ -35,32 +31,18 @@ export default function Header() {
                 <Link to="/" className="logo">
                     Device shop
                 </Link>
+
                 {!isAuthenticated ? (
-                    <Button
-                        onClick={handleLogin}
-                        size="large"
-                        iconPosition="end"
-                        icon={<LoginOutlined />}
-                    >
+                    <Button onClick={handleLogin} size="large" iconPosition="end" icon={<LoginOutlined />}>
                         Войти
                     </Button>
                 ) : (
                     <Space>
-                        <Button
-                            onClick={handleAddProduct}
-                            type="primary"
-                            size="large"
-                            iconPosition="end"
-                            icon={<PlusCircleOutlined />}
-                        >
+                        <Button onClick={handleAddProduct} type="primary" size="large" iconPosition="end" icon={<PlusCircleOutlined />}>
                             Добавить товар
                         </Button>
-                        <Button
-                            onClick={handleLogout}
-                            size="large"
-                            iconPosition="end"
-                            icon={<LogoutOutlined />}
-                        >
+
+                        <Button onClick={handleLogout} size="large" iconPosition="end" icon={<LogoutOutlined />}>
                             {' '}
                             Выйти
                         </Button>

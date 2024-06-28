@@ -13,12 +13,7 @@ import { productsApi } from '@/services/products'
 import { useAppDispatch, useAppSelector } from '@/hooks/app-hooks'
 import type { NewProductPayload, PageableResponse } from '@/types'
 import AddProductForm from '@/components/form/add-product-form/AddProductForm'
-import {
-    setEditingProduct,
-    setIsProductEditing,
-    setProductModalVisibility,
-    setProducts
-} from '@/store/global/store'
+import { setEditingProduct, setIsProductEditing, setProductModalVisibility, setProducts } from '@/store/global/store'
 
 type Props = {
     isOpen: boolean
@@ -28,12 +23,8 @@ export default function AddProductModal({ isOpen }: Props) {
     const { message } = App.useApp()
     const dispatch = useAppDispatch()
     const [initialValues, setInitialValues] = useState<NewProductPayload>()
-    const editingProduct = useAppSelector(
-        (state) => state.global.editingProduct
-    )
-    const isProductEditing = useAppSelector(
-        (state) => state.global.isProductEditing
-    )
+    const editingProduct = useAppSelector((state) => state.global.editingProduct)
+    const isProductEditing = useAppSelector((state) => state.global.isProductEditing)
 
     const config: ModalProps = {
         open: isOpen,
@@ -70,21 +61,13 @@ export default function AddProductModal({ isOpen }: Props) {
     }
 
     async function handleFormSubmit(payload: NewProductPayload) {
-        const successMessageContent = isProductEditing
-            ? 'Продукт успешно сохранён'
-            : 'Продукт успешно создан'
-        const loadingMessageContent = isProductEditing
-            ? 'Подождите, ваш товар сохраняется...'
-            : 'Подождите, ваш товар создается...'
-        const errorMessageContent = isProductEditing
-            ? 'Возникла непредвиденная ошибка при сохранении товара'
-            : 'Возникла непредвиденная ошибка при создании товара'
+        const successMessageContent = isProductEditing ? 'Продукт успешно сохранён' : 'Продукт успешно создан'
+        const loadingMessageContent = isProductEditing ? 'Подождите, ваш товар сохраняется...' : 'Подождите, ваш товар создается...'
+        const errorMessageContent = isProductEditing ? 'Возникла непредвиденная ошибка при сохранении товара' : 'Возникла непредвиденная ошибка при создании товара'
 
         try {
             const method = isProductEditing ? 'put' : 'post'
-            const endpoint = isProductEditing
-                ? `/products/${editingProduct.id}`
-                : '/products'
+            const endpoint = isProductEditing ? `/products/${editingProduct.id}` : '/products'
 
             message.loading(loadingMessageContent)
 
@@ -101,13 +84,9 @@ export default function AddProductModal({ isOpen }: Props) {
                 message.success(successMessageContent)
                 dispatch(setProductModalVisibility(false))
 
-                productsApi
-                    .getProducts<
-                        PageableResponse<Product>
-                    >({ _page: 1, _per_page: 6 })
-                    .then((res) => {
-                        dispatch(setProducts(res.data.data))
-                    })
+                productsApi.getProducts<PageableResponse<Product>>({ _page: 1, _per_page: 6 }).then((res) => {
+                    dispatch(setProducts(res.data.data))
+                })
             }
         } catch (error) {
             message.error(errorMessageContent)
@@ -144,14 +123,7 @@ export default function AddProductModal({ isOpen }: Props) {
 
     return (
         <Modal {...config}>
-            <Form
-                onSubmit={handleFormSubmit}
-                initialValues={initialValues}
-                validate={handleFormValidate}
-                render={(props: FormRenderProps<NewProductPayload>) => (
-                    <AddProductForm {...props} />
-                )}
-            />
+            <Form onSubmit={handleFormSubmit} initialValues={initialValues} validate={handleFormValidate} render={(props: FormRenderProps<NewProductPayload>) => <AddProductForm {...props} />} />
         </Modal>
     )
 }
